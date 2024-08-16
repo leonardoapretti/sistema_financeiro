@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # nossos apps
+    'lancamentos'
 ]
 
 MIDDLEWARE = [
@@ -51,9 +54,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'project.urls'
 
+# CONFIGURAÇÃO DE TEMPLATES
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # NESSA LISTA É POSSÍVEL ADICIONAR PASTAS ADICIONAIS A TEMPLATES PARA QUE O DJANGO BUSQUE OS TEMPLATES. CAMINHO A PARTIR DA VARIÁVEL BASE_DIR (RAIZ DA APLICAÇÃO)
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
