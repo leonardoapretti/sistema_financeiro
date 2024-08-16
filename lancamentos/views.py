@@ -4,4 +4,6 @@ from django.http import HttpResponse
 
 
 def home(request):
-    return render(request, 'lancamentos/home.html')
+    return render(request, 'lancamentos/home.html', context={
+        'nome': 'Leonardo dos Anjos Pretti'
+    })
