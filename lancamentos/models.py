@@ -41,11 +41,11 @@ class Modalidade(models.Model):
 class Lancamento(models.Model):
     id = models.BigAutoField(primary_key=True, editable=False)
     titulo = models.CharField(max_length=65)
-    descricao = models.CharField(max_length=165, null=True)
-    slug = models.SlugField(unique=True)
-    data = models.DateTimeField()
+    descricao = models.CharField(max_length=165, null=True, default=None)
+    slug = models.SlugField()  # voltar para unique=True após desenvolvimento
+    data_lancamento = models.DateField(null=True, default=None)
     data_criacao = models.DateTimeField(auto_now_add=True)
-    valor = models.PositiveIntegerField()
+    valor_total = models.FloatField()
     compartilhado = models.BooleanField(default=False)
     fixo_mensal = models.BooleanField(default=False)
     quantidade_parcelas = models.PositiveIntegerField(default=1)
@@ -71,7 +71,7 @@ class LancamentoBaixa(models.Model):
     id = models.AutoField(primary_key=True, editable=False)
     id_lancamento = models.ForeignKey(Lancamento, on_delete=models.CASCADE)
     data = models.DateTimeField(auto_now_add=True)
-    valor = models.PositiveIntegerField()
+    valor = models.FloatField()
     numero_parcela = models.PositiveIntegerField(default=1)
 
     class Meta:
@@ -80,3 +80,11 @@ class LancamentoBaixa(models.Model):
 
     def __str__(self):
         return self.id
+
+
+class Parcela(models.Model):
+    id = models.AutoField(primary_key=True, editable=False)
+    id_lancamento = models.ForeignKey(Lancamento, on_delete=models.CASCADE)
+    numero_parcela = models.PositiveIntegerField()
+    valor_parcela = models.FloatField()
+    data_vencimento = models.DateField()
