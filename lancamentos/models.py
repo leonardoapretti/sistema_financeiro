@@ -93,3 +93,7 @@ class Parcela(models.Model):
     numero_parcela = models.PositiveIntegerField()
     valor_parcela = models.FloatField()
     data_vencimento = models.DateField()
+
+
+class Perfil(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name=)
