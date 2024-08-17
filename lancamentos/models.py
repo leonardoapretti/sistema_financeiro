@@ -2,6 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+class Usuario(models.Model):
+    usuario = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name='perfil')
+    # TODO alterar para required após desenvovimento
+    cpf = models.PositiveIntegerField()
+    telefone = models.PositiveIntegerField(null=True, default=None)
+
+
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True, editable=False)
     nome = models.CharField(max_length=65)
@@ -43,7 +51,7 @@ class Lancamento(models.Model):
     titulo = models.CharField(max_length=65)
     descricao = models.CharField(max_length=165, null=True, default=None)
     valor_total = models.FloatField(verbose_name='Valor')
-    slug = models.SlugField()  # voltar para unique=True após desenvolvimento
+    slug = models.SlugField()  # TODO voltar para unique=True após desenvolvimento
     data_lancamento = models.DateField(
         null=True, default=None, verbose_name='Data')
     data_criacao = models.DateTimeField(auto_now_add=True)
@@ -61,9 +69,9 @@ class Lancamento(models.Model):
     id_tipo = models.ForeignKey(
         Tipo, on_delete=models.CASCADE, verbose_name='Tipo')
     id_usuario_ativo = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_ativo')
+        Usuario, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_ativo')
     id_usuario_titular = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_titular', verbose_name='Titular')
+        Usuario, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_titular', verbose_name='Titular')
 
     class Meta:
         verbose_name = 'Lançamento'
@@ -93,7 +101,3 @@ class Parcela(models.Model):
     numero_parcela = models.PositiveIntegerField()
     valor_parcela = models.FloatField()
     data_vencimento = models.DateField()
-
-
-class Perfil(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name=)
