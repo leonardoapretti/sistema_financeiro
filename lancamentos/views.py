@@ -11,6 +11,7 @@ def home(request):
     lancamentos = Lancamento.objects.all()
 
     form = LancamentoForm(request.POST or None, request.FILES or None)
+    print(form)
 
     contexto = {
         'form': form

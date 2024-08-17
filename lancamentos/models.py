@@ -42,23 +42,28 @@ class Lancamento(models.Model):
     id = models.BigAutoField(primary_key=True, editable=False)
     titulo = models.CharField(max_length=65)
     descricao = models.CharField(max_length=165, null=True, default=None)
+    valor_total = models.FloatField(verbose_name='Valor')
     slug = models.SlugField()  # voltar para unique=True após desenvolvimento
-    data_lancamento = models.DateField(null=True, default=None)
+    data_lancamento = models.DateField(
+        null=True, default=None, verbose_name='Data')
     data_criacao = models.DateTimeField(auto_now_add=True)
-    valor_total = models.FloatField()
     compartilhado = models.BooleanField(default=False)
     fixo_mensal = models.BooleanField(default=False)
-    quantidade_parcelas = models.PositiveIntegerField(default=1)
+    quantidade_parcelas = models.PositiveIntegerField(
+        default=1, verbose_name='Quantidade de parcelas')
 
-    id_categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    id_categoria = models.ForeignKey(
+        Categoria, on_delete=models.CASCADE, verbose_name='Categoria')
     id_instituicao_financeira = models.ForeignKey(
-        InstituicaoFincanceira, on_delete=models.CASCADE)
-    id_modalidade = models.ForeignKey(Modalidade, on_delete=models.CASCADE)
-    id_tipo = models.ForeignKey(Tipo, on_delete=models.CASCADE)
+        InstituicaoFincanceira, on_delete=models.CASCADE, verbose_name='Instituição financeira')
+    id_modalidade = models.ForeignKey(
+        Modalidade, on_delete=models.CASCADE, verbose_name='Modalidade')
+    id_tipo = models.ForeignKey(
+        Tipo, on_delete=models.CASCADE, verbose_name='Tipo')
     id_usuario_ativo = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_ativo')
     id_usuario_titular = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_titular')
+        User, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_titular', verbose_name='Titular')
 
     class Meta:
         verbose_name = 'Lançamento'
