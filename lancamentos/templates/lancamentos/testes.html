@@ -1,0 +1,18 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'global/style.css' %}">
+<form action="{{form_action}}" method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div>
+        {% comment %} <label for="{{field.id_for_label}}">{{field.label}}:</label> <!--Assim permite um controle refinado sobre o label mas também pode ser feito da foram a seguir--> {% endcomment %}
+        {{field.label_tag}}
+        
+        {{field}}
+    </div>
+    {% endfor %}
+    
+    <input type="submit" value="OK">
+</form>
+
+<p>teste</p>
+<div>teste</div>

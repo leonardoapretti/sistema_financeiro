@@ -1,13 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import date
 
 
-class Usuario(models.Model):
-    usuario = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name='perfil')
-    # TODO alterar para required após desenvovimento
-    cpf = models.PositiveIntegerField()
-    telefone = models.PositiveIntegerField(null=True, default=None)
+# class Usuario(models.Model):
+#     usuario = models.OneToOneField(
+#         User, on_delete=models.CASCADE, related_name='perfil', unique=True)
+#     # TODO alterar para required após desenvovimento
+#     cpf = models.PositiveIntegerField()
+#     telefone = models.PositiveIntegerField(null=True, default=None)
+
+#     def __str__(self) -> str:
+#         return self.usuario.get_full_name()
 
 
 class Categoria(models.Model):
@@ -49,11 +53,13 @@ class Modalidade(models.Model):
 class Lancamento(models.Model):
     id = models.BigAutoField(primary_key=True, editable=False)
     titulo = models.CharField(max_length=65)
-    descricao = models.CharField(max_length=165, null=True, default=None)
+    descricao = models.CharField(
+        max_length=165, null=True, default=None, blank=True)
     valor_total = models.FloatField(verbose_name='Valor')
-    slug = models.SlugField()  # TODO voltar para unique=True após desenvolvimento
+    # TODO voltar para unique=True após desenvolvimento
+    slug = models.SlugField(null=True, default=None, blank=True)
     data_lancamento = models.DateField(
-        null=True, default=None, verbose_name='Data')
+        null=True, default=date.today(), verbose_name='Data')
     data_criacao = models.DateTimeField(auto_now_add=True)
     compartilhado = models.BooleanField(default=False)
     fixo_mensal = models.BooleanField(default=False)
@@ -65,13 +71,13 @@ class Lancamento(models.Model):
     id_instituicao_financeira = models.ForeignKey(
         InstituicaoFincanceira, on_delete=models.CASCADE, verbose_name='Instituição financeira')
     id_modalidade = models.ForeignKey(
-        Modalidade, on_delete=models.CASCADE, verbose_name='Modalidade')
+        Modalidade, on_delete=models.CASCADE, verbose_name='Modalidade', default=1)
     id_tipo = models.ForeignKey(
-        Tipo, on_delete=models.CASCADE, verbose_name='Tipo')
+        Tipo, on_delete=models.CASCADE, verbose_name='Tipo', default=2)
     id_usuario_ativo = models.ForeignKey(
-        Usuario, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_ativo')
+        User, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_ativo')
     id_usuario_titular = models.ForeignKey(
-        Usuario, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_titular', verbose_name='Titular')
+        User, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_titular', verbose_name='Titular')
 
     class Meta:
         verbose_name = 'Lançamento'

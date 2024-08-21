@@ -1,0 +1,11 @@
+<form action="#">
+    {% comment %} impede a injeção de informações diretamente pela url {% endcomment %}
+    {% csrf_token %}
+    {% for campo in form %}
+    <div>
+        <label for="campo.id_for_label">{{campo.label}}</label>
+        {{campo}}
+
+    </div>
+    {% endfor %}
+</form>
