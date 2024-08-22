@@ -1,5 +1,8 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'global/style.css' %}">
+<link rel="stylesheet" href="{% static 'global/bootstrap/css/bootstrap.min.css' %}">
+
+
 <form action="{{form_action}}" method="post">
     {% csrf_token %}
     {% for field in form %}
@@ -14,5 +17,7 @@
     <input type="submit" value="OK">
 </form>
 
-<p>teste</p>
-<div>teste</div>
+<p class='btn btn-lg'>teste</p>
+<div class='btn btn-lg'>teste</div>
+
+{% comment %} <script src="{%static global/bootstrap/js/bootstrap.min.js %}"></script> {% endcomment %}

@@ -51,15 +51,15 @@ class Modalidade(models.Model):
 
 
 class Lancamento(models.Model):
-    id = models.BigAutoField(primary_key=True, editable=False)
-    titulo = models.CharField(max_length=65)
+    id = models.BigAutoField(primary_key=True, editable=False)  # ok
+    titulo = models.CharField(max_length=65)  # ok
     descricao = models.CharField(
-        max_length=165, null=True, default=None, blank=True)
-    valor_total = models.FloatField(verbose_name='Valor')
+        max_length=165, null=True, default=None, blank=True)  # ok
+    valor_total = models.FloatField(verbose_name='Valor')  # ok
     # TODO voltar para unique=True após desenvolvimento
     slug = models.SlugField(null=True, default=None, blank=True)
     data_lancamento = models.DateField(
-        null=True, default=date.today(), verbose_name='Data')
+        null=True, default=date.today(), verbose_name='Data')  # ok
     data_criacao = models.DateTimeField(auto_now_add=True)
     compartilhado = models.BooleanField(default=False)
     fixo_mensal = models.BooleanField(default=False)

@@ -19,9 +19,14 @@ def home(request):
         'form': form,
         # 'usuario': request.user.username,
         'lancamentos': lancamentos,
+        'titulo': 'teste'
 
     }
     return render(request, 'lancamentos/home.html', context=contexto)
+
+
+def novo(request):
+    print(request)
 
 
 def testes(request):
