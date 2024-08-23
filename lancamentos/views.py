@@ -11,22 +11,35 @@ from .models import Lancamento
 
 
 def home(request):
-    lancamentos = Lancamento.objects.all()
+    # lancamentos = Lancamento.objects.all()
 
     form = LancamentoForm(request.POST or None, request.FILES or None)
 
     contexto = {
         'form': form,
-        # 'usuario': request.user.username,
-        'lancamentos': lancamentos,
         'titulo': 'teste'
-
     }
     return render(request, 'lancamentos/home.html', context=contexto)
 
 
 def novo(request):
-    print(request)
+    print(request.user.id)
+    form = LancamentoForm(request.POST or None, request.FILES or None)
+
+    if request.method == 'POST':
+        form = LancamentoForm(request.POST or None)
+        if form.is_valid():
+            form.save(commit=False)
+            lancamento = form.cleaned_data
+            print(lancamento)
+            form.save()
+
+    contexto = {
+        'form': form,
+        'titulo': 'teste'
+    }
+
+    return render(request, 'lancamentos/novo.html', context=contexto)
 
 
 def testes(request):

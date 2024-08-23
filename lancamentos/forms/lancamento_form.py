@@ -1,7 +1,7 @@
 
 from django import forms
 from lancamentos.models import *
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
 
 class LancamentoForm(forms.ModelForm):
@@ -10,15 +10,11 @@ class LancamentoForm(forms.ModelForm):
         for visible in self.visible_fields():
             label = visible.field.label
             match label:
-                case 'Modalidade' | 'Fixo mensal' | 'Tipo' | 'instituicao_financeira':
+                case 'Modalidade' | 'Tipo' | 'Instituição financeira':
                     visible.field.widget.attrs['class'] = 'custom-select'
 
                 case _:  # default do python
                     visible.field.widget.attrs['class'] = 'form-control'
-
-    titulo = forms.CharField(
-        help_text='Digite uma breve descrição do lançamento',
-    )
 
     class Meta:
         model = Lancamento
@@ -26,7 +22,6 @@ class LancamentoForm(forms.ModelForm):
         exclude = ['slug', 'id_usuario_ativo']
         widgets = {
             'descricao': forms.Textarea,
-            'data_lancamento': forms.DateInput(format='%d/%m/%Y'),
         }
 
     ...

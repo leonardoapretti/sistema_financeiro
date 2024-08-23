@@ -1,3 +1,5 @@
+from django.utils.crypto import get_random_string
+from django.utils.text import slugify
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
@@ -52,12 +54,11 @@ class Modalidade(models.Model):
 
 class Lancamento(models.Model):
     id = models.BigAutoField(primary_key=True, editable=False)  # ok
-    titulo = models.CharField(max_length=65)  # ok
+    titulo = models.CharField(max_length=65, verbose_name='Titulo')  # ok
     descricao = models.CharField(
         max_length=165, null=True, default=None, blank=True)  # ok
     valor_total = models.FloatField(verbose_name='Valor')  # ok
-    # TODO voltar para unique=True após desenvolvimento
-    slug = models.SlugField(null=True, default=None, blank=True)
+    slug = models.SlugField(unique=True)
     data_lancamento = models.DateField(
         null=True, default=date.today(), verbose_name='Data')  # ok
     data_criacao = models.DateTimeField(auto_now_add=True)
@@ -84,6 +85,17 @@ class Lancamento(models.Model):
 
     def __str__(self):
         return self.titulo
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            slug = f'{slugify(self.titulo)}'
+            slug_existente = Lancamento.objects.filter(slug=slug).first()
+            if slug_existente is not None:
+                slug += get_random_string(4)
+            print(slug_existente)
+            print(slug)
+            self.slug = slug
+        return super().save(*args, **kwargs)
 
 
 class LancamentoBaixa(models.Model):
