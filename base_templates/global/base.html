@@ -2,18 +2,15 @@
 {% load static %}
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'global/bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'global/style.css' %}">
+    {% include "./partials/head.html" %}
     <title>{% block titulo %}{% endblock titulo %}</title>
 </head>
 <body>
-    <div class='main-content'>
-        {% block conteudo %}{% endblock conteudo %}
+    <div class='main-content-container'>
+        {% block conteudo %}
+        {% endblock conteudo %}
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="{%static 'global/bootstrap/js/bootstrap.min.js' %}"></script>
+    {% include "./partials/footer.html" %}
 </body>
 </html>

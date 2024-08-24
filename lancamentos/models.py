@@ -66,7 +66,6 @@ class Lancamento(models.Model):
     fixo_mensal = models.BooleanField(default=False)
     quantidade_parcelas = models.PositiveIntegerField(
         default=1, verbose_name='Quantidade de parcelas')
-
     id_categoria = models.ForeignKey(
         Categoria, on_delete=models.CASCADE, verbose_name='Categoria')
     id_instituicao_financeira = models.ForeignKey(

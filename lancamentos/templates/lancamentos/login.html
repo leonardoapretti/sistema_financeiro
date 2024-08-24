@@ -1,0 +1,14 @@
+{% extends "global/base.html" %}
+{% block titulo %}{{titulo}}{% endblock titulo %}
+{% block conteudo %}
+    <div class="card " id='login-card'>
+        <div class="card-head mb-3">
+            <h1>LOGIN</h1>
+        </div>
+        {% include "global/partials/messages.html" %}
+        {% include "./partials/login_form.html" %}
+
+    </div>
+
+    
+{% endblock conteudo %}
