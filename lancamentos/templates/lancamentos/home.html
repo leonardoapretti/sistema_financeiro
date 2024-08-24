@@ -1,5 +1,15 @@
 {% extends "global/base.html" %}
 {% block titulo %}Início{% endblock titulo %}
 {% block conteudo %}
+<div class="p-3">
+    <form action="{% url "lancamentos:logout_user" %}" method="POST">
+        {% csrf_token %}
+        {% include "global/partials/messages.html" %}
+        <input type="hidden" name="username" value="{{request.user.username}}">
+        <button class="btn btn-warning" type="submit">Sair</button>
+    </form>
 
+    <button class='btn btn-success text-white mt-3'><a href="{% url "lancamentos:novo" %}">Novo lançamento</a></button>
+
+</div>
 {% endblock conteudo %}

@@ -6,13 +6,14 @@ from .forms.forms_teste import FormTeste
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 
 # Create your views here.
 
 from .models import Lancamento
 
 
-def login(request):
+def login_user(request):
     if (request.user.is_authenticated):
         return redirect('lancamentos:home')
 
@@ -25,8 +26,8 @@ def login(request):
             )
             print(usuario_autenticado)
             if usuario_autenticado is not None:
+                login(request, usuario_autenticado)
                 messages.success(request, 'Bem-vindo!')
-                login(request)
                 return redirect('lancamentos:home')
             else:
                 messages.error(request, 'Usuário ou senha incorretos!')
@@ -37,6 +38,20 @@ def login(request):
         'titulo': 'Login'
     }
     return render(request, 'lancamentos/login.html', context=contexto)
+
+
+# CONTINUAR O LOGOUT
+def logout_user(request):
+    if not request.POST or request.user.username != request.user.username:
+        print(request.method)
+        print(request.user.get('username'))
+        print(request.user.username)
+        messages.error(request, 'Resquisição inválida!')
+        return redirect('lancamentos:login_user')
+
+    logout(request)
+    messages.success(request, 'Até mais!')
+    return redirect('lancamentos:login_user')
 
 
 def home(request):
@@ -55,12 +70,16 @@ def novo(request):
     form = LancamentoForm(request.POST or None, request.FILES or None)
 
     if request.method == 'POST':
-        form = LancamentoForm(request.POST or None)
+        POST = request.POST or None
+        # POST.update({'id_usuario_ativo': request.user.id})
+
+        print(POST)
+        form = LancamentoForm(POST)
         if form.is_valid():
-            form.save(commit=False)
-            lancamento = form.cleaned_data
-            print(lancamento)
-            form.save()
+            lancamento = form.save(commit=False)
+            lancamento.id_usuario_ativo = request.user
+            # print(lancamento)
+            lancamento.save()
 
     contexto = {
         'form': form,

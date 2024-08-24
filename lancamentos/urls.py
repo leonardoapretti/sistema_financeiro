@@ -4,7 +4,8 @@ from lancamentos import views
 app_name = 'lancamentos'
 
 urlpatterns = [
-    path('', views.login, name='login'),
+    path('', views.login_user, name='login_user'),
+    path('logout/', views.logout_user, name='logout_user'),
     path('home/', views.home, name='home'),
     path('novo/', views.novo, name='novo'),
     path('testes', views.testes, name='testes'),

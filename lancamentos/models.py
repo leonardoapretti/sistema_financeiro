@@ -75,7 +75,7 @@ class Lancamento(models.Model):
     id_tipo = models.ForeignKey(
         Tipo, on_delete=models.CASCADE, verbose_name='Tipo', default=2)
     id_usuario_ativo = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_ativo')
+        User, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_ativo', verbose_name='Usuario ativo')
     id_usuario_titular = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, related_name='users_to_usuario_titular', verbose_name='Titular')
 
@@ -90,10 +90,12 @@ class Lancamento(models.Model):
             slug = f'{slugify(self.titulo)}'
             slug_existente = Lancamento.objects.filter(slug=slug).first()
             if slug_existente is not None:
-                slug += get_random_string(4)
-            print(slug_existente)
-            print(slug)
+                slug += f'-{get_random_string(4)}'
             self.slug = slug
+
+        print(self.id_usuario_ativo)
+        print(self.id_usuario_ativo)
+
         return super().save(*args, **kwargs)
 
 
