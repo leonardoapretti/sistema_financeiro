@@ -1,0 +1,87 @@
+{% comment %} <div class="table-responsive">
+    <table class="table table-sm table-hover table-striped justify-content-center">
+        <thead class="table-dark">
+          <tr>
+            <th class="align-middle" scope="col">Data</th>
+            <th class="align-middle" scope="col">Titulo</th>
+            <th class="align-middle" scope="col">Descrição</th>
+            <th class="align-middle" scope="col">Valor</th>
+            <th class="align-middle" scope="col">Quantidade de parcelas</th>
+            <th class="align-middle" scope="col">Titular</th>
+            <th class="align-middle" scope="col">Compartilhado</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for lancamento in lancamentos %}
+                <tr>
+                    <td class="align-middle">{{lancamento.data_lancamento | date:'d/m/Y'}}</td>
+                    <td class="align-middle" class="align-middle">{{lancamento.titulo}}</td>
+                    <td class="align-middle">{{lancamento.descricao}}</td>
+                    <td class="align-middle">{{lancamento.valor_total}}</td>
+                    <td class="align-middle">{{lancamento.quantidade_parcelas}}</td>
+                    <td class="align-middle">{{lancamento.id_usuario_titular}}</td>
+                    <td class="align-middle">{% if lancamento.compartilhado %}Sim {% elif lancamento.compartilhado == False %}Não{% endif %}</td>
+                </tr>    
+            {% endfor %}
+        </tbody>
+    </table>
+</div> {% endcomment %}
+
+
+  <div class="table-responsive">
+    <table class="table table-responsive table-borderless">
+        
+      <thead>
+        <tr class="bg-light">
+          <th scope="col" width="20%">Valor total compartilhado Leonardo:{{totalizadores.valor_leonardo_compartilhado}}</th>
+          <th scope="col" width="20%">Valor total compartilhado Milena:{{totalizadores.valor_milena_compartilhado}}</th>
+          <th scope="col" width="20%">Valor total pessoal Leonardo:{{totalizadores.valor_leonardo_pessoal}}</th>
+          <th scope="col" width="10%">Valor total pessoal Milena:{{totalizadores.valor_milena_pessoal}}</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+
+<div class="container mt-5 px-2">
+    
+    <div class="mb-2 d-flex justify-content-between align-items-center">
+        <div class="position-relative">
+            <span class="position-absolute search"></span>
+            <input class="form-control w-100" placeholder="Pesquise por nome, data...">
+        </div>        
+    </div>
+    <div class="table-responsive">
+    <table class="table table-responsive table-borderless">
+        
+      <thead>
+        <tr class="bg-light">
+          <th scope="col" width="20%">Data</th>
+          <th scope="col" width="20%">Titulo</th>
+          <th scope="col" width="20%">Valor</th>
+          <th scope="col" width="10%">Parcelas</th>
+          <th scope="col" width="20%"><span>Titular</span></th>
+          <th scope="col" class="text-end" width="10%"><span>Compartilhado</span></th>
+        </tr>
+      </thead>
+  <tbody>
+    {% for lancamento in lancamentos %}
+    <tr>
+      <td><a href="{% url "lancamentos:detalhes" id_lancamento=lancamento.id %}">{{lancamento.data_lancamento | date:'d/m/Y'}}</a></td>
+      <a href="#"><td>{{lancamento.titulo}}</td></a>
+      <a href="#"><td><span class="ms-1">{{lancamento.valor_total}}</span></td></a>
+       {% comment "" %}<i class="material-symbols-outlined">check_circle</i>{% endcomment %}
+      <a href="#"><td>{{lancamento.quantidade_parcelas}}</td></a>
+      <a href="#"><td class="text-end">{{lancamento.id_usuario_titular}}</td></a>
+      <a href="#"><td>{% if lancamento.compartilhado %}Sim {% elif lancamento.compartilhado == False %}Não{% endif %}</td></a>
+    </tr>
+    {% endfor %}
+    
+    
+    
+  </tbody>
+</table>
+  
+  </div>
+    
+</div> 

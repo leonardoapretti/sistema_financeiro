@@ -15,6 +15,9 @@ class LancamentoForm(forms.ModelForm):
 
                 case _:  # default do python
                     visible.field.widget.attrs['class'] = 'form-control'
+        # tentativa de formatação do input moeda
+        self.fields['valor_total'].widget.attrs['step'] = 0.01
+        self.fields['valor_total'].widget.attrs['min'] = 0.01
 
     class Meta:
         model = Lancamento
@@ -22,6 +25,7 @@ class LancamentoForm(forms.ModelForm):
         exclude = ['slug', 'id_usuario_ativo']
         widgets = {
             'descricao': forms.Textarea,
+            # 'valor_total': forms.TextInput
         }
 
     ...

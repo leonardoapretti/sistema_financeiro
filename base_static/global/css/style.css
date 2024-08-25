@@ -131,7 +131,7 @@
   color: var(--color-dark-text);
   text-align: center;
   margin-bottom: 1rem;
-  max-width: 10rem;
+  /* max-width: 10rem; */
 }
 
 .message-error {
@@ -170,3 +170,23 @@
   color: var(--color-debug-dark);
 }
 
+/* TABLES */
+table{
+  
+  text-align: center;
+}
+
+/* TENTATIVA DE BORDA NAS CELULAS */
+/* .table > :not(caption) > * > * > *{
+  margin: 5px solid red;
+
+} */
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
