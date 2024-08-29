@@ -6,7 +6,7 @@ from lancamentos.forms.lancamento_form import LancamentoForm
 
 class NovoLancamentoView(View):
     def get(self, request):
-        form = LancamentoForm(request.POST or None)
+        form = LancamentoForm()
         contexto = {
             'form': form,
             'titulo': 'teste'
@@ -24,6 +24,8 @@ class NovoLancamentoView(View):
             lancamento.save()
             messages.success(
                 request, f'{lancamento.id_tipo} cadastrada com sucesso!')
+            # TODO Provisório para evitar limpeza do form
+            return render(request, 'lancamentos/pages/novo.html', context={'form': form})
             return redirect('lancamentos:novo')
         messages.error(request, 'Algo deu errado com a sua requisição!')
         return redirect('lancamentos:novo')

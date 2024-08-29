@@ -19,50 +19,50 @@ from datetime import date
 
 class Categoria(models.Model):
     id = models.AutoField(primary_key=True, editable=False)
-    nome = models.CharField(max_length=65)
+    title = models.CharField(max_length=65)
 
     def __str__(self):
-        return self.nome
+        return self.title
 
     class Meta:
-        ordering = ['nome']
+        ordering = ['title']
 
 
 class InstituicaoFincanceira(models.Model):
     id = models.AutoField(primary_key=True, editable=False)
-    nome = models.CharField(max_length=65)
+    title = models.CharField(max_length=65)
 
     class Meta:
         verbose_name = 'Instituição Financeira'
         verbose_name_plural = 'Instituições Financeiras'
 
     def __str__(self):
-        return self.nome
+        return self.title
 
     class Meta:
-        ordering = ['nome']
+        ordering = ['title']
 
 
 class Tipo(models.Model):
     id = models.AutoField(primary_key=True, editable=False)
-    nome = models.CharField(max_length=65)
+    title = models.CharField(max_length=65)
 
     def __str__(self) -> str:
-        return self.nome
+        return self.title
 
     class Meta:
-        ordering = ['nome']
+        ordering = ['title']
 
 
 class Modalidade(models.Model):
     id = models.AutoField(primary_key=True, editable=False)
-    nome = models.CharField(max_length=65)
+    title = models.CharField(max_length=65)
 
     def __str__(self):
-        return self.nome
+        return self.title
 
     class Meta:
-        ordering = ['nome']
+        ordering = ['title']
 
 
 class Lancamento(models.Model):
@@ -108,9 +108,6 @@ class Lancamento(models.Model):
                 slug += f'-{get_random_string(4)}'
             self.slug = slug
 
-    def __set_first_caracter_uppercase(self):
-        print(self.titulo.capitalize())
-
     def save(self, *args, **kwargs):
         self.__set_slug()
         # TODO VERIFICAR SE É MELHOR DEIXAR ASSIM OU CONFORME ENTRADA DO USUÁRIO
@@ -125,7 +122,7 @@ class Lancamento(models.Model):
 
 class LancamentoBaixa(models.Model):
     id = models.AutoField(primary_key=True, editable=False)
-    id_lancamento = models.ForeignKey(Lancamento, on_delete=models.CASCADE)
+    id_parcela = models.ForeignKey(Lancamento, on_delete=models.CASCADE)
     data = models.DateTimeField(auto_now_add=True)
     valor = models.FloatField()
     numero_parcela = models.PositiveIntegerField(default=1)

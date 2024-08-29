@@ -47,28 +47,28 @@ class LancamentoAdmin(admin.ModelAdmin):
 
 @admin.register(models.LancamentoBaixa)
 class LancamentoAdmin(admin.ModelAdmin):
-    list_display = 'id', 'id_lancamento', 'data', 'valor', 'numero_parcela',
+    list_display = 'id', 'id_parcela', 'data', 'valor', 'numero_parcela',
 
 
 @admin.register(models.Modalidade)
 class ModalidadeAdmin(admin.ModelAdmin):
-    list_display = 'id', 'nome',
+    list_display = 'id', 'title',
 
 
 @admin.register(models.Categoria)
 class CategoriaAdmin(admin.ModelAdmin):
-    list_display = 'id', 'nome',
+    list_display = 'id', 'title',
 
 
 @admin.register(models.Tipo)
 class TipoAdmin(admin.ModelAdmin):
-    list_display = 'id', 'nome',
+    list_display = 'id', 'title',
 
 
 @admin.register(models.InstituicaoFincanceira)
 class InstituicaoFincanceiraAdmin(admin.ModelAdmin):
-    list_display = 'id', 'nome',
-    search_fields = ['nome']
+    list_display = 'id', 'title',
+    search_fields = ['title']
 
 
 # admin.site.register(models.Usuario)
