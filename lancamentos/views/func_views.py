@@ -1,10 +1,12 @@
+from django.utils.decorators import method_decorator
 import pprint
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms.lancamento_form import LancamentoForm
-from .forms.login_form import LoginForm
-from .forms.forms_teste import FormTeste
+from django.views import View
+from lancamentos.forms.lancamento_form import LancamentoForm
+from ..forms.login_form import LoginForm
+from ..forms.forms_teste import FormTeste
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -12,7 +14,7 @@ from django.contrib.auth.models import User
 from utils.print_c import print_c
 # Create your views here.
 
-from .models import Lancamento
+from lancamentos.models import Lancamento
 
 
 def login_user(request):
@@ -26,7 +28,6 @@ def login_user(request):
                 username=form.cleaned_data.get('username', ''),
                 password=form.cleaned_data.get('password', ''),
             )
-            print(usuario_autenticado)
             if usuario_autenticado is not None:
                 login(request, usuario_autenticado)
                 messages.success(request, 'Bem-vindo!')
@@ -39,7 +40,7 @@ def login_user(request):
         'form': form,
         'titulo': 'Login'
     }
-    return render(request, 'lancamentos/login.html', context=contexto)
+    return render(request, 'lancamentos/pages/login.html', context=contexto)
 
 # redirect_field_name recebe a página que o usuário tentou acessar antes de estar logado, assim, ele será redirecionado para a página diretamente
 # esse atributo é passado para a url
@@ -58,7 +59,6 @@ def logout_user(request):
 @login_required(login_url='lancamentos:login_user', redirect_field_name='next')
 def home(request):
     # lancamentos = Lancamento.objects.all()
-    print(request.user)
     form = LancamentoForm(request.POST or None, request.FILES or None)
 
     contexto = {
@@ -76,7 +76,6 @@ def novo(request):
         if form.is_valid():
             lancamento = form.save(commit=False)
             lancamento.id_usuario_ativo = request.user
-            # print(lancamento)
             lancamento.save()
 
     form = LancamentoForm(request.POST or None)
@@ -99,20 +98,7 @@ def extrato(request):
     }
 
     for lancamento in lancamentos:
-        print(lancamento)
         valor = lancamento.valor_total
-        print(lancamento.id_usuario_titular)
-        print(lancamento.compartilhado)
-
-        # if lancamento.id_usuario_titular.username == 'leonardoapretti':
-        #     print('entrou no nome')
-        #     if lancamento.compartilhado == False:
-        #         totalizadores['valor_leonardo_pessoal'] += valor
-
-        # elif lancamento.id_usuario_titular == 2:
-        #     print('entrou no nome')
-        #     if lancamento.compartilhado == False:
-        #         totalizadores['valor_milena_pessoal'] += valor
 
         match lancamento.id_usuario_titular.username:
             case 'basmore':
@@ -126,7 +112,6 @@ def extrato(request):
         totalizadores['valor_compartilhado'] += valor
         totalizadores['valor_dividido'] = totalizadores['valor_compartilhado'] / 2
 
-    print(totalizadores)
     contexto = {
         'lancamentos': lancamentos,
         'titulo': 'Extrato',

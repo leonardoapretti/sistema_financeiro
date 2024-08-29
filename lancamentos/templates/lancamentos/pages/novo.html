@@ -1,5 +1,6 @@
 {% extends "global/base.html" %}
 {% block titulo %}{{titulo}}{% endblock titulo %}
 {% block conteudo %}
+{% include "global/partials/messages.html" %}
 {% include "../partials/lancamento_form.html" %}
 {% endblock conteudo %}

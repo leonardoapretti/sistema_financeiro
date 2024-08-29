@@ -1,0 +1,6 @@
+<form action="">
+{% for field in form %}
+<label for="field.id_for_label">{{field.label}}</label>
+<input class="form-input" type="text" id="{{field.id}}" name="{{field}}">
+{% endfor %}
+</form>
