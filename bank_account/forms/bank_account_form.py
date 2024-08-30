@@ -1,14 +1,13 @@
-
 from django import forms
-from lancamentos.models import *
-# from django.contrib.auth.models import User
+from bank_account.models import *
 
 
-class LancamentoForm(forms.ModelForm):
+class BankAccountForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(LancamentoForm, self).__init__(*args, **kwargs)
+        super(BankAccountForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             input_type = visible.field.widget.__class__.__name__
+            print(input_type)
             match input_type:
                 case 'Select':
                     visible.field.widget.attrs['class'] = 'custom-select'
@@ -17,12 +16,5 @@ class LancamentoForm(forms.ModelForm):
                     visible.field.widget.attrs['class'] = 'form-control'
 
     class Meta:
-        model = Lancamento
+        model = BankAccountModel
         fields = '__all__'
-        exclude = ['slug', 'id_usuario_ativo']
-        widgets = {
-            'descricao': forms.Textarea,
-            # 'valor_total': forms.TextInput
-        }
-
-    ...

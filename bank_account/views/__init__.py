@@ -1,0 +1,1 @@
+from .bank_account.bank_account_form_view import BankAccountFormView
