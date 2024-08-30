@@ -14,7 +14,7 @@ from django.contrib.auth.models import User
 from utils.print_c import print_c
 # Create your views here.
 
-from lancamentos.models import Lancamento
+from lancamentos.models import Entry
 
 
 def login_user(request):
@@ -68,64 +68,64 @@ def home(request):
     return render(request, 'lancamentos/pages/home.html', context=contexto)
 
 
-@login_required(login_url='lancamentos:login_user', redirect_field_name='next')
-def novo(request):
-    if request.method == 'POST':
-        POST = request.POST or None
-        form = LancamentoForm(POST)
-        if form.is_valid():
-            lancamento = form.save(commit=False)
-            lancamento.id_usuario_ativo = request.user
-            lancamento.save()
+# @login_required(login_url='lancamentos:login_user', redirect_field_name='next')
+# def novo(request):
+#     if request.method == 'POST':
+#         POST = request.POST or None
+#         form = LancamentoForm(POST)
+#         if form.is_valid():
+#             lancamento = form.save(commit=False)
+#             lancamento.id_usuario_ativo = request.user
+#             lancamento.save()
 
-    form = LancamentoForm(request.POST or None)
-    contexto = {
-        'form': form,
-        'titulo': 'teste'
-    }
+#     form = LancamentoForm(request.POST or None)
+#     contexto = {
+#         'form': form,
+#         'titulo': 'teste'
+#     }
 
-    return render(request, 'lancamentos/pages/novo.html', context=contexto)
-
-
-@login_required(login_url='lancamentos:login_user', redirect_field_name='next')
-def extrato(request):
-    lancamentos = Lancamento.objects.all()
-
-    totalizadores = {
-        'valor_milena_pessoal': 0,
-        'valor_leonardo_pessoal': 0,
-        'valor_compartilhado': 0,
-    }
-
-    for lancamento in lancamentos:
-        valor = lancamento.valor_total
-
-        match lancamento.id_usuario_titular.username:
-            case 'basmore':
-                if lancamento.compartilhado == False:
-                    totalizadores['valor_milena_pessoal'] += valor
-                    continue
-            case 'leonardoapretti':
-                if lancamento.compartilhado == False:
-                    totalizadores['valor_leonardo_pessoal'] += valor
-                    continue
-        totalizadores['valor_compartilhado'] += valor
-        totalizadores['valor_dividido'] = totalizadores['valor_compartilhado'] / 2
-
-    contexto = {
-        'lancamentos': lancamentos,
-        'titulo': 'Extrato',
-        'totalizadores': totalizadores
-    }
-
-    return render(request, 'lancamentos/pages/extrato.html', context=contexto)
+#     return render(request, 'lancamentos/pages/novo.html', context=contexto)
 
 
-def detalhes(request, id_lancamento):
-    contexto = {
-        'id_lancamento': id_lancamento
-    }
-    return render(request, 'lancamentos/pages/detalhes.html', contexto)
+# @login_required(login_url='lancamentos:login_user', redirect_field_name='next')
+# def extrato(request):
+#     lancamentos = Entry.objects.all()
+
+#     totalizadores = {
+#         'valor_milena_pessoal': 0,
+#         'valor_leonardo_pessoal': 0,
+#         'valor_compartilhado': 0,
+#     }
+
+#     for lancamento in lancamentos:
+#         valor = lancamento.valor_total
+
+#         match lancamento.id_usuario_titular.username:
+#             case 'basmore':
+#                 if lancamento.compartilhado == False:
+#                     totalizadores['valor_milena_pessoal'] += valor
+#                     continue
+#             case 'leonardoapretti':
+#                 if lancamento.compartilhado == False:
+#                     totalizadores['valor_leonardo_pessoal'] += valor
+#                     continue
+#         totalizadores['valor_compartilhado'] += valor
+#         totalizadores['valor_dividido'] = totalizadores['valor_compartilhado'] / 2
+
+#     contexto = {
+#         'lancamentos': lancamentos,
+#         'titulo': 'Extrato',
+#         'totalizadores': totalizadores
+#     }
+
+#     return render(request, 'lancamentos/pages/extrato.html', context=contexto)
+
+
+# def detalhes(request, id_lancamento):
+#     contexto = {
+#         'id_lancamento': id_lancamento
+#     }
+#     return render(request, 'lancamentos/pages/detalhes.html', contexto)
 
 
 @login_required(login_url='lancamentos:login_user', redirect_field_name='next')

@@ -17,11 +17,11 @@ class LancamentoForm(forms.ModelForm):
                     visible.field.widget.attrs['class'] = 'form-control'
 
     class Meta:
-        model = Lancamento
+        model = Entry
         fields = '__all__'
-        exclude = ['slug', 'id_usuario_ativo']
+        exclude = ['slug', 'id_active_user']
         widgets = {
-            'descricao': forms.Textarea,
+            # 'description': forms.Textarea,
             # 'valor_total': forms.TextInput
         }
 

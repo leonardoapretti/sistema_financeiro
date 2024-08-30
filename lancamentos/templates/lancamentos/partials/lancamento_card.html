@@ -5,26 +5,26 @@
       <div class="card p-3">
         <div class="card-header border-bottom flex-column align-items-start p-3">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers text-primary h3 stroke-width-1 mb-2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-          <h4 class="text-primary font-weight-light mb-2">{{lancamento.id_tipo}}</h4>
-          <p class="font-size-sm mb-0">{{lancamento.titulo}}</p>
+          <h4 class="text-primary font-weight-light mb-2">{{lancamento.id_type}}</h4>
+          <p class="font-size-sm mb-0">{{lancamento.title}}</p>
         </div>
         <div class="card-header border-bottom justify-content-center py-4">
           <h2 class="pricing-price">
             <small class="align-self-start">R$</small>
-            {{lancamento.valor_total}}
+            {{lancamento.value}}
           </h2>
         </div>
         <div class="card-body">
           <ul class="list-unstyled font-size-sm mb-0 word-breaker">
-            <li class='d-flex flex-row'><span class='material-icons align-self-center color-primary'>calendar_month</span><span class="text-secondary ml-3 "><strong>Data: </strong>{{lancamento.data_lancamento}}</span></li>
-            <li class='d-flex flex-row'><span class='material-icons align-self-center color-primary'>face</span><span class="text-secondary ml-3 "><strong>Titular: </strong>{{lancamento.id_usuario_titular}}</span></li>
+            <li class='d-flex flex-row'><span class='material-icons align-self-center color-primary'>calendar_month</span><span class="text-secondary ml-3 "><strong>Data: </strong>{{lancamento.entry_date}}</span></li>
+            <li class='d-flex flex-row'><span class='material-icons align-self-center color-primary'>face</span><span class="text-secondary ml-3 "><strong>Titular: </strong>{{lancamento.id_titular_user}}</span></li>
             {% if lancamento.descricao %}
-                <li class='d-flex flex-row'><span class='material-icons align-self-top color-primary mt-1'>description</span><span class="text-secondary ml-3 "><strong>Descrição: </strong>{{lancamento.descricao}}</span></li>
+                <li class='d-flex flex-row'><span class='material-icons align-self-top color-primary mt-1'>description</span><span class="text-secondary ml-3 "><strong>Descrição: </strong>{{lancamento.description}}</span></li>
             {% endif %}
-            <li class='d-flex flex-row'><span class='material-icons align-self-top color-primary mt-1'>format_list_numbered</span><span class="text-secondary ml-3 "><strong>Parcelas: </strong>{{lancamento.quantidade_parcelas}}</span></li>
-            <li class='d-flex flex-row'><span class='material-icons color-primary mt-1'>folder_copy</span><span class="text-secondary ml-3 "><strong>Categoria: </strong>{{lancamento.id_categoria}}</span></li>
-            <li class='d-flex flex-row'><span class='material-icons align-self-top color-primary mt-1'>account_balance</span><span class="text-secondary ml-3 "><strong>Banco: </strong>{{lancamento.id_instituicao_financeira}}</span></li>          
-            <li class='d-flex flex-row'><span class='material-icons color-primary mt-1'>credit_card</span><span class="text-secondary ml-3 "><strong>Modalidade: </strong>{{lancamento.id_modalidade}}</span></li>
+            <li class='d-flex flex-row'><span class='material-icons align-self-top color-primary mt-1'>format_list_numbered</span><span class="text-secondary ml-3 "><strong>Parcelas: </strong>{{lancamento.installments_number}}</span></li>
+            <li class='d-flex flex-row'><span class='material-icons color-primary mt-1'>folder_copy</span><span class="text-secondary ml-3 "><strong>Categoria: </strong>{{lancamento.id_category}}</span></li>
+            <li class='d-flex flex-row'><span class='material-icons align-self-top color-primary mt-1'>account_balance</span><span class="text-secondary ml-3 "><strong>Banco: </strong>{{lancamento.id_card}}</span></li>          
+            <li class='d-flex flex-row'><span class='material-icons color-primary mt-1'>credit_card</span><span class="text-secondary ml-3 "><strong>Modalidade: </strong>{{lancamento.id_modality}}</span></li>
             
             
             
@@ -32,16 +32,16 @@
            
             
 
-            {% if lancamento.compartilhado == True %}
+            {% if lancamento.shared == True %}
                 <li class='d-flex flex-row'><span class='material-icons align-self-top color-success mt-1'>check</span><span class="text-secondary ml-3 ">
-            {% elif lancamento.compartilhado == False %}
+            {% elif lancamento.shared == False %}
                 <li class='d-flex flex-row'><span class='material-icons align-self-top color-danger mt-1'>close</span><span class="text-secondary ml-3 ">
             {% endif %}
             <strong> Compartilhado</strong></span></li>
 
 
 
-            {% if lancamento.fixo_mensal %}
+            {% if lancamento.fixed %}
               <li class='d-flex flex-row'><span class='material-icons color-danger mt-1'>update</span><span class="text-secondary ml-3 "><strong>Despesa fixa</strong></span></li>
             {% endif %}
           </ul>

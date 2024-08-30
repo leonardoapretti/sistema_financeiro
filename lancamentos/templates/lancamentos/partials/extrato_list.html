@@ -28,13 +28,13 @@
       <tbody>
       {% for lancamento in lancamentos %}
         <tr>
-          <td ><a href="{{lancamento.get_absolute_url}}">{{lancamento.data_lancamento | date:'d/m/Y'}}</a></td>
-          <td><span class='d-inline-block'>{{lancamento.titulo}}</span></td>
-          <td><span class="ms-1">{{lancamento.valor_total}}</span></td>
+          <td ><a href="{{lancamento.get_absolute_url}}">{{lancamento.entry_date | date:'d/m/Y'}}</a></td>
+          <td><span class='d-inline-block'>{{lancamento.title}}</span></td>
+          <td><span class="ms-1">{{lancamento.value}}</span></td>
           {% comment "" %}<i class="material-symbols-outlined">check_circle</i>{% endcomment %}
-          <td>{{lancamento.id_tipo}}</td>
-          <td class="text-end">{{lancamento.id_usuario_titular}}</td>
-          <td><span{% if lancamento.compartilhado %} class="material-icons color-success">check {% elif lancamento.compartilhado == False %} class="material-icons color-danger">close{% endif %}</span></td>
+          <td>{{lancamento.id_type}}</td>
+          <td class="text-end">{{lancamento.id_titular_user}}</td>
+          <td><span{% if lancamento.shared %} class="material-icons color-success">check {% elif lancamento.shared == False %} class="material-icons color-danger">close{% endif %}</span></td>
           <td>
           <form action="{% url "lancamentos:delete" pk=lancamento.id %}" method='post'>
             {% csrf_token %}

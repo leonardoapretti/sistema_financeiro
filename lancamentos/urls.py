@@ -9,15 +9,15 @@ urlpatterns = [
     path('home/', views.home, name='home'),
 
     path('novo/', login_required(views.NovoLancamentoView.as_view(),
-         login_url='lancamentos:login_user', redirect_field_name='next'), name='novo'),
+                                 login_url='lancamentos:login_user', redirect_field_name='next'), name='novo'),
     path('extrato/', login_required(views.ExtratoView.as_view(),
-         login_url='lancamentos:login_user', redirect_field_name='next'), name='extrato'),
+                                    login_url='lancamentos:login_user', redirect_field_name='next'), name='extrato'),
     path('<pk>/delete/', login_required(views.DeleteLancamentoView.as_view(),
-         login_url='lancamentos:login_user', redirect_field_name='next'), name='delete'),
+                                        login_url='lancamentos:login_user', redirect_field_name='next'), name='delete'),
     path('<pk>/detalhes/', login_required(views.LancamentoView.as_view(),
-         login_url='lancamentos:login_user', redirect_field_name='next'), name='detalhes'),
+                                          login_url='lancamentos:login_user', redirect_field_name='next'), name='detalhes'),
     path('<pk>/edit/', login_required(views.UpdateLancamentoView.as_view(),
-         login_url='lancamentos:login_user', redirect_field_name='next'), name='edit'),
+                                      login_url='lancamentos:login_user', redirect_field_name='next'), name='edit'),
     path('testes', login_required(views.GenericFormView.as_view(
     ), login_url='lancamentos:login_user', redirect_field_name='next'), name='testes'),
 

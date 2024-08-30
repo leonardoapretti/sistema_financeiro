@@ -1,11 +1,11 @@
 from django.views.generic import DetailView
-from lancamentos.models import Lancamento
+from lancamentos.models import Entry
 from django.contrib import messages
 from django.shortcuts import redirect, render
 
 
 class LancamentoView(DetailView):
-    model = Lancamento
+    model = Entry
     template_name = 'lancamentos/pages/lancamento.html'
     context_object_name = 'lancamento'
 
