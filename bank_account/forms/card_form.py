@@ -3,7 +3,7 @@ from bank_account.models import *
 
 
 class CardForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         super(CardForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             input_type = visible.field.widget.__class__.__name__
@@ -13,6 +13,10 @@ class CardForm(forms.ModelForm):
 
                 case _:
                     visible.field.widget.attrs['class'] = 'form-control'
+        # recupera o usuário passado como parâmetro na view e recupera apenas os bancos que o usuário cadastrou
+        self.user = user
+        self.fields['id_bank_account'].queryset = BankAccountModel.objects.filter(
+            id_titular_user=self.user)
 
     class Meta:
         model = CardModel

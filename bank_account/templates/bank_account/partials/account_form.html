@@ -1,15 +1,11 @@
 <div class="p-4">
-    <form action="{% url "bank_account:new" %}" method="post">
+    <form action="{% url "bank_account:new_bank_account" %}" method="post">
         {% comment %} impede a injeção de informações diretamente pela url {% endcomment %}
         {% csrf_token %}
         <div class="form-row">
             <div class="form-group col-md-5">
                 <label for="{{form.title.id_for_label}}">{{form.title.label}}</label>
                 {{form.title}}
-            </div>
-            <div class="form-group col-md-5">
-                <label for="{{form.id_titular_user.id_for_label}}">{{form.id_titular_user.label}}</label>
-                {{form.id_titular_user}}
             </div>
             
         </div>

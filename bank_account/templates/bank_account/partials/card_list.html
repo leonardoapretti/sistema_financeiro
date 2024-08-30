@@ -1,0 +1,42 @@
+<div class="mt-2 container px-2">
+
+    {% if cards %}
+    <div class="table-responsive">
+      <table class="table table-responsive table-borderless">
+  
+      <thead>
+        <tr class="bg-light">
+          <th scope="col" width="30%">Número</th>
+          <th scope="col" width="40%">Banco</th>
+          <th scope="col" width="20%">Dia vencimento</th>
+          <th scope="col" width="10%"></th>
+        </tr>
+      </thead>
+        <tbody>
+        {% for card in cards %}
+          <tr>
+            <td >{{card.card_number}}</td>
+            <td><span class='d-inline-block'>{{card.id_bank_account}}</span></td>
+            <td><span class='d-inline-block'>{{card.payment_day}}</span></td>
+            
+
+            <td>
+             <form action="{% url "bank_account:delete_card" pk=card.id %}" method='post'>
+              {% csrf_token %}
+              <input type="hidden" name="id" value="{{ card.id }}">
+              <button class="send-form-button" type="submit">❌</button>
+            </form>
+            </td>
+          </tr>
+        {% endfor %}
+  
+  
+  
+        </tbody>
+      </table>
+  
+    </div>
+      {% else %}
+      <h1>Não existem lancamentos por enquanto...</h1>
+      {% endif %}
+  </div> 

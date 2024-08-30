@@ -8,6 +8,5 @@ class DeleteLancamentoView(DeleteView):
     model = Lancamento
 
     def get_success_url(self):
-        print(self.request.POST)
         messages.success(self.request, 'Lançamento apagado com sucesso!')
         return reverse('lancamentos:extrato')
