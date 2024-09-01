@@ -5,16 +5,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import View
 from lancamentos.forms.lancamento_form import LancamentoForm
-from ..forms.login_form import LoginForm
-from ..forms.forms_teste import FormTeste
+from lancamentos.forms.login_form import LoginForm
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from utils.print_c import print_c
 # Create your views here.
-
-from lancamentos.models import Entry
 
 
 def login_user(request):

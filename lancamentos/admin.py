@@ -47,6 +47,10 @@ class EntryAdmin(admin.ModelAdmin):
 # class LancamentoAdmin(admin.ModelAdmin):
 #     list_display = 'id', 'id_parcela', 'data', 'valor', 'numero_parcela',
 
+@admin.register(models.Installment)
+class InstallmentAdmin(admin.ModelAdmin):
+    list_display = 'id', 'id_entry', 'number', 'value', 'due_date'
+
 
 @admin.register(models.Modality)
 class ModalidadeAdmin(admin.ModelAdmin):

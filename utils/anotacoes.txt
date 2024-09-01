@@ -1,3 +1,38 @@
+se despesa no crédito:
+    data = data vencimento cartão cadastrado 
+    *não permitir cadastro de receitas no crédito por conta da data de vencimento*
+else
+    data = data lancamento
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.utils.text import slugify

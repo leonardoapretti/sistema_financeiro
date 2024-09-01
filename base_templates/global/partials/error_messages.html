@@ -1,0 +1,21 @@
+{% if form.errors %}
+     {% for field in form %}
+        {% for error in field.errors %}
+        <div class="main-content center container messages-container">
+            <div class="message {{ message.tags }}">
+                {{error|escape}}
+            </div>
+        </div>
+        {% endfor %}
+    {% endfor %} 
+    {% for error in form.non_field_errors %}
+        <div class="main-content center container messages-container">
+            <div class="message {{ message.tags }}">
+                {{error|escape}}
+            </div>
+        </div>
+        {% comment %} <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div> {% endcomment %}
+    {% endfor %}
+{% endif %}

@@ -10,4 +10,4 @@ class CardListView(ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         f_qs = qs
-        return f_qs
+        return f_qs.filter(id_bank_account__id_titular_user=self.request.user)

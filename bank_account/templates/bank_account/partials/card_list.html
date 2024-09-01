@@ -6,8 +6,9 @@
   
       <thead>
         <tr class="bg-light">
-          <th scope="col" width="30%">Número</th>
-          <th scope="col" width="40%">Banco</th>
+          <th scope="col" width="20%">Número</th>
+          <th scope="col" width="30%">Banco</th>
+          <th scope="col" width="20%">Dia que vira</th>
           <th scope="col" width="20%">Dia vencimento</th>
           <th scope="col" width="10%"></th>
         </tr>
@@ -17,6 +18,7 @@
           <tr>
             <td >{{card.card_number}}</td>
             <td><span class='d-inline-block'>{{card.id_bank_account}}</span></td>
+            <td><span class='d-inline-block'>{{card.turn_day}}</span></td>
             <td><span class='d-inline-block'>{{card.payment_day}}</span></td>
             
 
@@ -37,6 +39,6 @@
   
     </div>
       {% else %}
-      <h1>Não existem lancamentos por enquanto...</h1>
+      <h1>Não existem cartões por enquanto...</h1>
       {% endif %}
   </div> 
