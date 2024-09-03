@@ -1,7 +1,6 @@
 from django.views.generic import View
 from lancamentos.models import Installment, Entry
-from lancamentos.forms import LancamentoForm
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.contrib import messages
 import datetime
 import pandas as pd
@@ -19,7 +18,7 @@ class InstallmentCreateView(View):
             card = entry.id_card
             if card == None:
                 messages.error(
-                    self.request, 'Selecione um cartão.')
+                    request, 'Selecione um cartão.')
                 Entry.objects.filter(id=entry_id).first().delete()
                 return redirect('lancamentos:novo')
 
@@ -52,6 +51,6 @@ class InstallmentCreateView(View):
             }
             init_month += 1
             print(data)
-            Installment.objects.create(**data)
-        messages.success(self.request, f'{entry.id_type} cadastrada!')
+            print(Installment.objects.create(**data))
+        messages.success(request, f'{entry.id_type} cadastrada!')
         return redirect('lancamentos:novo')

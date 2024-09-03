@@ -9,7 +9,7 @@ class BankAccountFormView(FormView):
     template_name = 'bank_account/pages/new_account.html'
     form_class = BankAccountForm
     context_object_name = 'form'
-    success_url = reverse_lazy('bank_account:new_bank_account')
+    success_url = reverse_lazy('bank_account:new_card')
 
     def form_valid(self, form):
         bank_account = form.save(commit=False)

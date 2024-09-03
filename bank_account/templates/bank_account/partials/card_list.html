@@ -1,3 +1,4 @@
+{% load text_filters %}
 <div class="mt-2 container px-2">
 
     {% if cards %}
@@ -7,9 +8,10 @@
       <thead>
         <tr class="bg-light">
           <th scope="col" width="20%">Número</th>
-          <th scope="col" width="30%">Banco</th>
+          <th scope="col" width="20%">Banco</th>
           <th scope="col" width="20%">Dia que vira</th>
           <th scope="col" width="20%">Dia vencimento</th>
+          <th scope="col" width="10%">Principal</th>
           <th scope="col" width="10%"></th>
         </tr>
       </thead>
@@ -20,6 +22,7 @@
             <td><span class='d-inline-block'>{{card.id_bank_account}}</span></td>
             <td><span class='d-inline-block'>{{card.turn_day}}</span></td>
             <td><span class='d-inline-block'>{{card.payment_day}}</span></td>
+            <td><span class='d-inline-block'>{{card.principal|boolean_format}}</span></td>
             
 
             <td>

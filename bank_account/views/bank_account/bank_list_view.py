@@ -10,6 +10,6 @@ class BankListView(ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         f_qs = qs
-        f_qs = BankAccountModel.objects.filter(
+        f_qs = BankAccountModel.objects.select_related().filter(
             id_titular_user=self.request.user)
         return f_qs

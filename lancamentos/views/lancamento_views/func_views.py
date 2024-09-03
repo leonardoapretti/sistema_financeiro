@@ -1,19 +1,18 @@
-from django.utils.decorators import method_decorator
-import pprint
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.views import View
 from lancamentos.forms.lancamento_form import LancamentoForm
 from lancamentos.forms.login_form import LoginForm
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from utils.print_c import print_c
+from django.contrib.auth.decorators import login_not_required
+
 # Create your views here.
 
 
+@login_not_required
 def login_user(request):
     if (request.user.is_authenticated):
         return redirect('lancamentos:home')

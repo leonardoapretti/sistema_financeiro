@@ -22,7 +22,7 @@
           <th scope="col" width="10%">Valor</th>
           <th scope="col" width="40%">Data do vencimento</th>
           <th scope="col" width="10%"><span>Compartilhada</span></th>
-          <th scope="col" width="10%"><span>Quitada</span></th>
+          <th scope="col" width="10%"><span>Quitar</span></th>
           <th scope="col" width="10%"></th>
         </tr>
       </thead>
@@ -35,12 +35,20 @@
             <td>{{installment.due_date | date:'d/m/Y'}}</td>
             <td><span{% if installment.id_entry.shared %} class="material-icons color-success">check {% elif installment.id_entry.shared == False %} class="material-icons color-danger">close{% endif %}</span></td>
             <td>
-            {% comment %} <form action="{% url "lancamentos:delete" pk=lancamento.id %}" method='post'>
+            <form action="{% url "lancamentos:installment_pay" %}" method='post'>
               {% csrf_token %}
-              <input type="hidden" name="id" value="{{ lancamento.id }}">
-              <button class="send-form-button" type="submit">❌</button>
-            </form> {% endcomment %}
+              <input type="hidden" name="id" value="{{ installment.id }}">
+              <button class="send-form-button" type="submit"><span class="material-icons">paid</span></button>
+            </form> 
             </td>
+
+            {% comment %} <td>
+              <form action="{% url "bank_account:delete_card" pk=card.id %}" method='post'>
+               {% csrf_token %}
+               <input type="hidden" name="id" value="{{ card.id }}">
+               <button class="send-form-button" type="submit">❌</button>
+             </form>
+             </td> {% endcomment %}
           </tr>
         {% endfor %}
   

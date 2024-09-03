@@ -1,5 +1,6 @@
 from django import forms
 from bank_account.models import *
+from django.forms import ValidationError
 
 
 class CardForm(forms.ModelForm):
@@ -11,8 +12,13 @@ class CardForm(forms.ModelForm):
                 case 'Select':
                     visible.field.widget.attrs['class'] = 'custom-select'
 
+                # case 'CheckboxInput':
+                #     visible.field.widget.attrs['class'] = 'form-check-input'
+                #     print(visible.field.widget.attrs['class'])
+
                 case _:
                     visible.field.widget.attrs['class'] = 'form-control'
+
         # recupera o usuário passado como parâmetro na view e recupera apenas os bancos que o usuário cadastrou
         self.user = user
         self.fields['id_bank_account'].queryset = BankAccountModel.objects.filter(
@@ -21,3 +27,10 @@ class CardForm(forms.ModelForm):
     class Meta:
         model = CardModel
         fields = '__all__'
+
+    def clean_id_bank_account(self):
+        cleaned_bank_account = self.cleaned_data['id_bank_account']
+        if cleaned_bank_account == None:
+            raise ValidationError('O banco não pode ser vazio.', 'invalid')
+
+        return cleaned_bank_account

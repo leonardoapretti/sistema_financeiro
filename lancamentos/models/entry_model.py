@@ -27,7 +27,7 @@ class Entry(models.Model):
     id_card = models.ForeignKey(
         CardModel, on_delete=models.SET_NULL, verbose_name='Cartao', default=None, null=True, blank=True, )
     id_bank_account = models.ForeignKey(
-        BankAccountModel, on_delete=models.DO_NOTHING, default=None, null=True, blank=True, verbose_name='Banco')
+        BankAccountModel, on_delete=models.SET_NULL, default=None, null=True, blank=True, verbose_name='Banco')
     id_modality = models.ForeignKey(
         Modality, on_delete=models.CASCADE, verbose_name='Modalidade', default=1)
     id_type = models.ForeignKey(

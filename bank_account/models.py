@@ -18,11 +18,12 @@ class BankAccountModel(models.Model):
 class CardModel(models.Model):
     id = models.AutoField(primary_key=True, editable=False)
     id_bank_account = models.ForeignKey(
-        BankAccountModel, on_delete=models.CASCADE, verbose_name='Banco', related_name='cartoes', default=None, null=True, blank=True,)
+        BankAccountModel, on_delete=models.CASCADE, verbose_name='Banco', related_name='cartoes', default=None, null=True)
     card_number = models.CharField(
-        verbose_name='Numero cartão', max_length=65, blank=True, default=None)
+        verbose_name='Nome do cartão', max_length=65)
     payment_day = models.IntegerField(verbose_name='Dia vencimento', default=5)
     turn_day = models.IntegerField(verbose_name='Dia que vira', default=30)
+    principal = models.BooleanField(default=False)
 
     def __str__(self):
         return self.card_number
