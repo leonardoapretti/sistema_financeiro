@@ -4,8 +4,8 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import FormView
 from lancamentos.forms import LancamentoForm
-from lancamentos.models import Entry
 import datetime
+from bank_account.models import BankAccountModel
 # finalizar essa alteração
 
 
@@ -15,7 +15,13 @@ class NewEntryView(FormView):
     success_url = reverse_lazy('lancamentos:novo')
     form_class = LancamentoForm
 
-    # from ContextMixin via FormMixin
+    # def get_form_kwargs(self):
+
+    #     kwargs = super(NewEntryView, self).get_form_kwargs()
+
+    #     kwargs['user'] = self.request.user
+
+    #     return kwargs
 
     def get_context_data(self, **kwargs):
         data = super(NewEntryView, self).get_context_data(**kwargs)
@@ -46,5 +52,3 @@ class NewEntryView(FormView):
         response = super().form_invalid(form)
         messages.error(self.request, 'Algo deu errado com a sua requisição!')
         return response
-
-    # def create_installments(self)

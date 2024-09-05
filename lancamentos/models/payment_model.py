@@ -13,8 +13,7 @@ class Payment(models.Model):
         User, verbose_name='Usuário', on_delete=models.CASCADE, blank=True, null=True, default=None)
 
     class Meta:
-        verbose_name = 'Lançamento Baixa'
-        verbose_name_plural = 'Lançamentos Baixas'
+        verbose_name = 'Payment'
 
     def __str__(self):
-        return self.id
+        return f'{self.id} - {self.id_installment}'

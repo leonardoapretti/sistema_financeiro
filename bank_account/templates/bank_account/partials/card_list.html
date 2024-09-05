@@ -7,7 +7,7 @@
   
       <thead>
         <tr class="bg-light">
-          <th scope="col" width="20%">Número</th>
+          <th scope="col" width="20%">Apelido</th>
           <th scope="col" width="20%">Banco</th>
           <th scope="col" width="20%">Dia que vira</th>
           <th scope="col" width="20%">Dia vencimento</th>
@@ -18,7 +18,7 @@
         <tbody>
         {% for card in cards %}
           <tr>
-            <td >{{card.card_number}}</td>
+            <td >{{card.card_name}}</td>
             <td><span class='d-inline-block'>{{card.id_bank_account}}</span></td>
             <td><span class='d-inline-block'>{{card.turn_day}}</span></td>
             <td><span class='d-inline-block'>{{card.payment_day}}</span></td>

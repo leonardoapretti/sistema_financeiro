@@ -41,13 +41,13 @@ class InstallmentCreateView(View):
 
         for install_number in range(installs_number):
             install_number += 1
-            due_date = pd.to_datetime(entry_date) + \
+            payment_day = pd.to_datetime(entry_date) + \
                 pd.DateOffset(months=init_month)
             data = {
                 'id_entry': entry,
                 'number': install_number,
                 'value': install_value,
-                'due_date': due_date,
+                'payment_day': payment_day,
             }
             init_month += 1
             print(data)

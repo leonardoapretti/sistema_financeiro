@@ -6,7 +6,7 @@
         <input type="date" class="form-control ml-1 " id="start_date" name='start_date'>
       
         <label class="form-label align-middle ml-3" for="end_date">Data Fim: </label>
-        <input type="date" class="form-control ml-1 " id="end_date" name='end_date'>
+        <input type="date" class="form-control ml-1 " id="end_date" name='end_date' >
       
         <button type="submit" class="btn btn-primary ml-1">Filtrar</button>
       </div>
@@ -32,7 +32,7 @@
             <td ><a href="{{installment.id_entry.get_absolute_url}}">{{installment.id_entry}}</a></td>
             <td><span class='d-inline-block'>{{installment.number}}/{{installment.id_entry.installments_number}}</span></td>
             <td><span class="ms-1">{{installment.value}}</span></td>
-            <td>{{installment.due_date | date:'d/m/Y'}}</td>
+            <td>{{installment.payment_day | date:'d/m/Y'}}</td>
             <td><span{% if installment.id_entry.shared %} class="material-icons color-success">check {% elif installment.id_entry.shared == False %} class="material-icons color-danger">close{% endif %}</span></td>
             <td>
             <form action="{% url "lancamentos:installment_pay" %}" method='post'>

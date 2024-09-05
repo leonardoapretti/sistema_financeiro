@@ -9,4 +9,7 @@ class Installment(models.Model):
     number = models.PositiveIntegerField(
         verbose_name='Numero parcela')
     value = models.FloatField(verbose_name='Valor parcela')
-    due_date = models.DateField(verbose_name='Data de vencimento')
+    payment_day = models.DateField(verbose_name='Data de vencimento')
+
+    def __str__(self):
+        return f'{self.id} - {self.id_entry}'

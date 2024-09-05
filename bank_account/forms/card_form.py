@@ -11,11 +11,6 @@ class CardForm(forms.ModelForm):
             match input_type:
                 case 'Select':
                     visible.field.widget.attrs['class'] = 'custom-select'
-
-                # case 'CheckboxInput':
-                #     visible.field.widget.attrs['class'] = 'form-check-input'
-                #     print(visible.field.widget.attrs['class'])
-
                 case _:
                     visible.field.widget.attrs['class'] = 'form-control'
 

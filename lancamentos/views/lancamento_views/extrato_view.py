@@ -4,6 +4,7 @@ from django.views.generic import ListView
 from lancamentos.models import Entry
 import datetime
 from django.db.models import Q
+from base_views.extract_base_view import ExtractBaseView
 
 
 class ExtratoView(ListView):
