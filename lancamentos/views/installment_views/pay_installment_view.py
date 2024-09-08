@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.views.generic import View
 from lancamentos.models.payment_model import Payment
 from lancamentos.models.installment_model import Installment
@@ -5,21 +6,27 @@ from django.shortcuts import redirect
 import datetime
 from django.contrib import messages
 
+"""
+TODO
+para cada pagamento deverá ser lançada uma receita para o usuário que está vinculado como credor da despesa, caso haja
+"""
+
 
 class PayInstallmentView(View):
-    # def redirect(self):
-    #     return redirect('lancamentos:installment_list')
-
-    # def get(self):
-    #     self.redirect(self)
-
     def post(self, request, *args, **kwargs):
         installment = Installment.objects.get(id=request.POST['id'] or None)
         if installment == None:
             messages.error(
                 self.request, 'Algo deu errado com a sua requisição!')
             return redirect('lancamentos:installment_list')
-        print(installment)
+
+        if installment.paid == True:
+            messages.error(
+                self.request, 'Esta parcela ja foi quitada!')
+            return redirect('lancamentos:installment_list')
+
+        installment.paid = True
+        installment.save()
         today = datetime.date.today()
         payment_data = {
             'id_installment': installment,
@@ -30,4 +37,5 @@ class PayInstallmentView(View):
         }
         Payment.objects.create(**payment_data)
         messages.success(request, 'Despesa quitada!')
-        return redirect('lancamentos:installment_list')
+        # TODO implementar redirect com filtro
+        return redirect(request.META['HTTP_REFERER'])

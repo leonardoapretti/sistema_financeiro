@@ -4,8 +4,13 @@ from django.shortcuts import redirect
 from django.contrib import messages
 import datetime
 import pandas as pd
+from django.contrib.auth.models import User
 
 
+# """
+# TODO
+# certificar que as despesas no débito estão sendo lançadas na sua data atual e as posteriores no dia atual pro próximos meses
+# """"
 class InstallmentCreateView(View):
     def get(self, request, entry_id):
         entry = Entry.objects.filter(id=entry_id).first()
@@ -13,7 +18,6 @@ class InstallmentCreateView(View):
         init_month = ''
         entry_date = entry.entry_date
         today = datetime.date.today()
-        print(today)
         if str(entry.id_modality) == 'Crédito':
             card = entry.id_card
             if card == None:
@@ -41,16 +45,24 @@ class InstallmentCreateView(View):
 
         for install_number in range(installs_number):
             install_number += 1
-            payment_day = pd.to_datetime(entry_date) + \
+            payment_date = pd.to_datetime(entry_date) + \
                 pd.DateOffset(months=init_month)
             data = {
                 'id_entry': entry,
                 'number': install_number,
                 'value': install_value,
-                'payment_day': payment_day,
+                'payment_date': payment_date,
+                'id_titular_user': entry.id_titular_user,
             }
             init_month += 1
             print(data)
-            print(Installment.objects.create(**data))
+            Installment.objects.create(**data)
+            print(User.objects.all().exclude(
+                id=entry.id_titular_user.id).first())
+            if entry.shared:
+                data['id_titular_user'] = User.objects.all().exclude(
+                    id=entry.id_titular_user.id).first()
+                print(data)
+                Installment.objects.create(**data)
         messages.success(request, f'{entry.id_type} cadastrada!')
         return redirect('lancamentos:novo')

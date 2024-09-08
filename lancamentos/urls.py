@@ -10,13 +10,13 @@ urlpatterns = [
 
     path('novo/', views.NewEntryView.as_view(),
          name='novo'),
-    path('lancamentos/extrato', views.ExtratoView.as_view(),
+    path('lancamentos/extrato', views.EntriesView.as_view(),
          name='extrato'),
-    path('<pk>/delete/', views.DeleteLancamentoView.as_view(),
+    path('<pk>/delete/', views.EntryDeleteView.as_view(),
          name='delete'),
-    path('<pk>/detalhes/', views.LancamentoView.as_view(),
+    path('<pk>/detalhes/', views.EntryView.as_view(),
          name='detalhes'),
-    path('<pk>/edit/', views.UpdateLancamentoView.as_view(),
+    path('<pk>/edit/', views.EntryUpdateView.as_view(),
          name='edit'),
     path('<entry_id>/create_installment/', views.InstallmentCreateView.as_view(),
          name='create_installment'),
@@ -24,6 +24,8 @@ urlpatterns = [
          name='installment_list'),
     path('parcelas/quitar/', views.PayInstallmentView.as_view(),
          name='installment_pay'),
-    path('testes', views.home, name='testes'),
+    #     path('parcelas/quitar/', views.PayInstallmentView.as_view(),
+    #          name='installment_pay'),
+    path('testes', views.testes, name='testes'),
 
 ]

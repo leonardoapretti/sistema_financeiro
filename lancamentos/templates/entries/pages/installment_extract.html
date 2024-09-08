@@ -2,10 +2,10 @@
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
 {% include "global/partials/messages.html" %}
-{% include "../partials/installment_list.html" %}
+{% include "global/partials/filter_form.html" %}
 <div class="row align-between">
-    {% include "lancamentos/partials/totalizers.html" %}
-
+    {% include "entries/partials/totalizers.html" %}
 </div>
+{% include "../partials/installment_list.html" %}
 {% endblock content %}
 

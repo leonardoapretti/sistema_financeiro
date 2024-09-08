@@ -1,0 +1,156 @@
+{% load number_filters %}
+<div class="mt-2 container px-2">
+  {% if installments %}
+    {% for installment in installments %}
+    <a href="{% url "lancamentos:detalhes" installment.id_entry.id %}">
+
+      <div class="list-item">
+        {% if installment.id_entry.id_type.title == 'Despesa' %}
+        <div class="item-box d-md-flex align-items-center justify-content-between mb-30 color-expense">
+        {% elif installment.id_entry.id_type.title == 'Receita' %}
+        <div class="item-box d-md-flex align-items-center justify-content-between mb-30 color-income">
+        {% endif %}
+          <div class="item-left my-4 d-md-flex align-items-center flex-wrap">
+            <div class="img-holder mr-md-4 mb-md-0 mb-4 mx-auto mx-md-0 d-md-none d-lg-flex">
+              {% comment %} {{installment.id_entry.id_titular_user}} {% endcomment %}
+              {% if installment.id_entry.id_titular_user.first_name == 'Leonardo' %}
+              LP
+              {% else %}
+              MB
+              {% endif %}
+            </div>
+              <div class="item-content">
+                <h5 class="text-center text-md-left ml-1 font-small">{{installment.id_entry.id_titular_user}}</h5>
+                <ul class="d-md-flex flex-wrap text-capitalize ff-open-sans">
+                  <li class="mr-md-4">
+                    <span class='font-small'>Título:</span> {{installment.id_entry.title|truncatechars:25}}
+                  </li>
+                  <li class="mr-md-4">
+                    <span class='font-small'>Vencimento:</span> {{installment.payment_date|date:"d/m/Y" }}
+                  </li>
+                  <li class="mr-md-4">
+                    <span class='font-small'>Valor:</span> {{installment.value|currency_format}}
+                  </li>
+                  <li class="mr-md-4">
+                    <span class='font-small'>Parcela:</span> {{installment.number}}/{{installment.id_entry.installments_number}}
+                  </li>
+                  <li class="mr-md-4">
+                    <span class='font-small'>Categoria:</span> {{installment.id_entry.id_category}}
+                  </li>
+                </ul>
+              </div>
+          </div>
+
+          <div class="item-right my-4 flex-shrink-0">
+            {% comment %} {% if installment.paid == False %} {% endcomment %}
+              {% comment %} <a href="{% url "lancamentos:installment_pay" %}"></a>
+              {% else %}
+              <span class="material-icons color-disable">paid</span>
+              {% endif %} {% endcomment %}
+            <form action="{% url "lancamentos:installment_pay" %}" method='post'>
+              {% csrf_token %}
+              <input type="hidden" name="id" value="{{ installment.id }}">
+              {% if installment.paid == False %}
+              <button class="send-form-button" type="submit"><span class="material-icons color-success">paid</span></button>
+              {% else %}
+              <span class="material-icons color-disable">paid</span>
+              {% endif %}
+            </form>
+          </div>
+        </div>
+      </div>
+    </a>
+
+    {% endfor %}
+    {% else %}
+    <h1>Não existem lançamentos por enquanto...</h1>
+    {% endif %}
+</div> 
+
+
+{% comment %} <div class="table-responsive">
+    <table class="table table-responsive table-borderless">
+
+    <thead>
+      <tr class="bg-light">
+        <th class="" scope="col" width="10%">Data</th>
+        <th class="" scope="col" width="40%">Titulo</th>
+        <th class="" scope="col" width="10%">Valor</th>
+        <th class="" scope="col" width="10%">Parcelas</th>
+        <th class="" scope="col" width="10%">Tipo</th>
+        <th class="" scope="col" width="10%"><span>Titular</span></th>
+        <th class="" scope="col" class="text-end" width="10%"><span>Compartilhada</span></th>
+      </tr>
+    </thead>
+      <tbody>
+      {% for entry in entries %}
+        <tr>
+          <td ><a href="{{entry.get_absolute_url}}">{{entry.entry_date | date:'d/m/Y'}}</a></td>
+          <td><span class='d-inline-block'>{{entry.title}}</span></td>
+          <td><span class="ms-1">{{entry.value}}</span></td>
+          <td><span class="ms-1">{{entry.installments_number}}</span></td>
+          <td>{{entry.id_type}}</td>
+          <td class="text-end">{{entry.id_titular_user}}</td>
+          <td><span{% if entry.shared %} class="material-icons color-success">check {% elif entry.shared == False %} class="material-icons color-danger">close{% endif %}</span></td>
+          <td>
+          <form action="{% url "lancamentos:delete" pk=entry.id %}" method='post'>
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ entry.id }}">
+            <button class="send-form-button" type="submit">❌</button>
+          </form>
+          </td>
+        </tr>
+      {% endfor %}
+
+
+
+      </tbody>
+    </table>
+
+  </div> {% endcomment %}
+
+{% comment %} <div class="mt-2 container px-2">
+    {% include "global/partials/filter_form.html" %}
+    {% if installments %}
+    <div class="table-responsive">
+      <table class="table table-responsive table-borderless">
+  
+      <thead>
+        <tr class="bg-light">
+          <th scope="col" width="10%">Lancamento</th>
+          <th scope="col" width="10%">Parcela</th>
+          <th scope="col" width="10%">Valor</th>
+          <th scope="col" width="40%">Data do vencimento</th>
+          <th scope="col" width="10%"><span>Compartilhada</span></th>
+          <th scope="col" width="10%"><span>Quitar</span></th>
+          <th scope="col" width="10%"></th>
+        </tr>
+      </thead>
+        <tbody>
+        {% for installment in installments %}
+          <tr>
+            <td ><a href="{{installment.id_entry.get_absolute_url}}">{{installment.id_entry}}</a></td>
+            <td><span class='d-inline-block'>{{installment.number}}/{{installment.id_entry.installments_number}}</span></td>
+            <td><span class="ms-1">{{installment.value}}</span></td>
+            <td>{{installment.payment_day | date:'d/m/Y'}}</td>
+            <td><span{% if installment.id_entry.shared %} class="material-icons color-success">check {% elif installment.id_entry.shared == False %} class="material-icons color-danger">close{% endif %}</span></td>
+            <td>
+            <form action="{% url "lancamentos:installment_pay" %}" method='post'>
+              {% csrf_token %}
+              <input type="hidden" name="id" value="{{ installment.id }}">
+              <button class="send-form-button" type="submit"><span class="material-icons">paid</span></button>
+            </form> 
+            </td>
+          </tr>
+        {% endfor %}
+  
+  
+  
+        </tbody>
+      </table>
+  
+    </div>
+      {% else %}
+      <h1>Não existem lançamentos nesta fatura...</h1>
+      {% endif %}
+  </div>  {% endcomment %}

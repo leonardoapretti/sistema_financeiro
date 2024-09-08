@@ -54,7 +54,6 @@ class Entry(models.Model):
 
     def save(self, *args, **kwargs):
         self.__set_slug()
-        # TODO VERIFICAR SE É MELHOR DEIXAR ASSIM OU CONFORME ENTRADA DO USUÁRIO
         self.title = self.title.capitalize()
         self.description = self.description.capitalize(
         ) if self.description else self.description

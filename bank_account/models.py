@@ -46,3 +46,16 @@ class CardModel(models.Model):
             start_date -= relativedelta(months=1)
         end_date = start_date + relativedelta(months=1) - relativedelta(days=1)
         return start_date, end_date
+
+    def get_bill_cutoff_dates(self):
+        today = datetime.date.today()
+        payment_date = today.replace(day=self.payment_day)
+
+        if today.day <= payment_date.day:
+            start_date = payment_date - relativedelta(months=1)
+            end_date = start_date
+            return start_date, end_date
+
+        start_date = payment_date
+        end_date = start_date + relativedelta(months=1)
+        return start_date, end_date

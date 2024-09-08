@@ -49,7 +49,7 @@ class EntryAdmin(admin.ModelAdmin):
 
 @admin.register(models.Installment)
 class InstallmentAdmin(admin.ModelAdmin):
-    list_display = 'id', 'id_entry', 'number', 'value', 'payment_day'
+    list_display = 'id', 'id_entry', 'number', 'value', 'payment_date', 'paid', 'id_titular_user'
 
 
 @admin.register(models.Payment)

@@ -4,7 +4,7 @@ from django.views.generic.edit import DeleteView
 from lancamentos.models import Entry
 
 
-class DeleteLancamentoView(DeleteView):
+class EntryDeleteView(DeleteView):
     model = Entry
 
     def get_success_url(self):

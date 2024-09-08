@@ -2,7 +2,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from lancamentos.forms.lancamento_form import LancamentoForm
+from lancamentos.forms.entry_form import EntryForm
 from lancamentos.forms.login_form import LoginForm
 from django.urls import reverse
 from django.contrib import messages
@@ -36,7 +36,7 @@ def login_user(request):
         'form': form,
         'titulo': 'Login'
     }
-    return render(request, 'lancamentos/pages/login.html', context=contexto)
+    return render(request, 'entries/pages/login.html', context=contexto)
 
 # redirect_field_name recebe a página que o usuário tentou acessar antes de estar logado, assim, ele será redirecionado para a página diretamente
 # esse atributo é passado para a url
@@ -55,13 +55,13 @@ def logout_user(request):
 @login_required(login_url='lancamentos:login_user', redirect_field_name='next')
 def home(request):
     # lancamentos = Lancamento.objects.all()
-    form = LancamentoForm(request.POST or None, request.FILES or None)
+    form = EntryForm(request.POST or None, request.FILES or None)
 
     contexto = {
         'form': form,
         'titulo': 'teste'
     }
-    return render(request, 'lancamentos/pages/home.html', context=contexto)
+    return render(request, 'entries/pages/home.html', context=contexto)
 
 
 # @login_required(login_url='lancamentos:login_user', redirect_field_name='next')
@@ -126,19 +126,6 @@ def home(request):
 
 @login_required(login_url='lancamentos:login_user', redirect_field_name='next')
 def testes(request):
-    if request.method == 'POST':
-        form = FormTeste(request.POST)
-        if form.is_valid():
-            # após o formulário passar pela validação inicial (is_valid()) os dados são distribuidos no dicionário cleaned_data para serem manipulados na view e validados de maneira mais específica
-            print(form.cleaned_data['nome'])
-            return HttpResponse('Obrigado')
 
-    else:
-        form = FormTeste()
-
-    contexto = {'form': form,
-                'form_action': reverse('lancamentos:testes'),
-                'form_errors': form.errors
-
-                }
-    return render(request, 'lancamentos/pages/testes.html', contexto)
+    context = {}
+    return render(request, 'entries/pages/testes.html', context)

@@ -11,7 +11,7 @@ class CardFormView(FormView):
     context_object_name = 'form'
     success_url = reverse_lazy('bank_account:new_card')
 
-    #  passa argumentos para o form
+    #  passa parametros para o form
     def get_form_kwargs(self):
 
         kwargs = super(CardFormView, self).get_form_kwargs()

@@ -3,12 +3,13 @@ from django.core.exceptions import ValidationError
 from django import forms
 from lancamentos.models import *
 import datetime
-# from django.contrib.auth.models import User
+from django.contrib.auth.models import User
+from bank_account.models import BankAccountModel
 
 
-class LancamentoForm(forms.ModelForm):
+class EntryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(LancamentoForm, self).__init__(*args, **kwargs)
+        super(EntryForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             input_type = visible.field.widget.__class__.__name__
             match input_type:
@@ -17,6 +18,11 @@ class LancamentoForm(forms.ModelForm):
 
                 case _:
                     visible.field.widget.attrs['class'] = 'form-control'
+
+        # self.request = kwargs.pop('request')
+
+        # self.fields["id_bank_account"].queryset = BankAccountModel.objects.filter(
+        #     id_titular_user=self.request.user)
 
     class Meta:
         model = Entry

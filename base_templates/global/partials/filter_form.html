@@ -1,0 +1,12 @@
+<form class="form-inline justify-content-center align-middle mb-2 " action="{{redirect_filter_url}}" method='post'>
+    {% csrf_token %}
+    <div class="form-group caixa-pesquisa align-middle">
+      <label class="form-label align-middle " for="start_date">Data Início: </label>
+      <input type="date" class="form-control ml-1 " id="start_date" name='start_date'>
+    
+      <label class="form-label align-middle ml-3" for="end_date">Data Fim: </label>
+      <input type="date" class="form-control ml-1 " id="end_date" name='end_date'>
+    
+      <button type="submit" class="btn btn-primary ml-1">Filtrar</button>
+    </div>
+</form>
