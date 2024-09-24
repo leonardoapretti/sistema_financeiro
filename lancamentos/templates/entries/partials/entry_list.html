@@ -1,9 +1,8 @@
 {% load number_filters %}
 <div class="mt-2 container px-2">
-  {% include "global/partials/filter_form.html" %}
   {% if entries %}
     {% for entry in entries %}
-    <a href="{% url "lancamentos:detalhes" entry.id %}">
+    <a href="{% url "entries:detalhes" slug=entry.slug %}">
       <div class="list-item">
         {% if entry.id_type.title == 'Despesa' %}
         <div class="item-box d-md-flex align-items-center justify-content-between mb-30 color-expense">
@@ -41,7 +40,7 @@
           </div>
 
           <div class="item-right my-4 flex-shrink-0">
-            <form action="{% url "lancamentos:delete" pk=entry.id %}" method='post'>
+            <form action="{% url "entries:delete" pk=entry.id %}" method='post'>
               {% csrf_token %}
               <input type="hidden" name="id" value="{{ entry.id }}">
               <button class="send-form-button" type="submit">❌</button>
@@ -82,7 +81,7 @@
           <td class="text-end">{{entry.id_titular_user}}</td>
           <td><span{% if entry.shared %} class="material-icons color-success">check {% elif entry.shared == False %} class="material-icons color-danger">close{% endif %}</span></td>
           <td>
-          <form action="{% url "lancamentos:delete" pk=entry.id %}" method='post'>
+          <form action="{% url "entries:delete" pk=entry.id %}" method='post'>
             {% csrf_token %}
             <input type="hidden" name="id" value="{{ entry.id }}">
             <button class="send-form-button" type="submit">❌</button>

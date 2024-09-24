@@ -9,4 +9,4 @@ class EntryDeleteView(DeleteView):
 
     def get_success_url(self):
         messages.success(self.request, 'Lançamento apagado!')
-        return reverse('lancamentos:extrato')
+        return reverse('entries:extrato')

@@ -3,19 +3,22 @@
 <div class="card-container">
   <div class="row gutters-sm">
     <div class="p-3">
-      <div class="card p-3">
+      <div class="entry-card p-3">
         <div class="card-header border-bottom flex-column align-items-start p-3">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers text-primary h3 stroke-width-1 mb-2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
           <h4 class="text-primary font-weight-light mb-2">{{entry.id_type}}</h4>
-          <p class="font-size-sm mb-0">{{entry.title}}</p>
+          <p class=" mb-0">{{entry.title}}</p>
         </div>
-        <div class="card-header border-bottom justify-content-center py-4">
+        <div class="card-header border-bottom flex-column justify-content-center py-4">
           <h2 class="pricing-price">
             {{entry.value|currency_format}}
           </h2>
+          {% if entry.difference %}
+            <p class=" font-small mb-0 color-danger">{{entry.difference|currency_format}}</p>
+          {% endif %}
         </div>
         <div class="card-body">
-          <ul class="list-unstyled font-size-sm mb-0 word-breaker">
+          <ul class="list-unstyled  mb-0 word-breaker">
             <li class='d-flex flex-row'><span class='material-icons align-self-center color-primary'>calendar_month</span><span class="text-secondary ml-3 "><strong>Data: </strong>{{entry.entry_date}}</span></li>
             <li class='d-flex flex-row'><span class='material-icons align-self-center color-primary'>face</span><span class="text-secondary ml-3 "><strong>Titular: </strong>{{entry.id_titular_user}}</span></li>
             {% if entry.descricao %}
@@ -27,21 +30,28 @@
             <li class='d-flex flex-row'><span class='material-icons color-primary mt-1'>credit_card</span><span class="text-secondary ml-3 "><strong>Modalidade: </strong>{{entry.id_modality}}</span></li>
             <li class='d-flex flex-row'><span class='material-icons align-self-top color-primary mt-1'>format_list_numbered</span><span class="text-secondary ml-3 "><strong>Parcelas: </strong>{{entry.installments_number}}</span></li>
             
-            {% for installment in entry.installments.all %}
-            <li class='d-flex flex-row'>
-              <span class="text-secondary ml-3 font-small">
-                <strong>{{forloop.counter}}: </strong>{{installment.payment_date|date:"d/m/Y"}} - {{installment.id_titular_user}}</span> {% if installment.paid == True %}<span class="material-icons color-success">check</span> {% else %} <span class="material-icons color-danger align-self-middle">close</span> {% endif %} </li>
-            {% endfor %}
-            
-           
-            
-
             {% if entry.shared == True %}
                 <li class='d-flex flex-row'><span class='material-icons align-self-top color-success mt-1'>check</span><span class="text-secondary ml-3 ">
-            {% elif entry.shared == False %}
-                <li class='d-flex flex-row'><span class='material-icons align-self-top color-danger mt-1'>close</span><span class="text-secondary ml-3 ">
+                <strong> Compartilhada</strong></span></li>
             {% endif %}
-            <strong> Compartilhado</strong></span></li>
+
+            {% for installment in entry.installments.all %}
+            <li class='d-flex flex-row'>
+              <a href="{% url "entries:installment_update" installment.id %}">
+                <span class="text-secondary ml-3 font-small">
+                  <strong>{{forloop.counter}}: </strong>{{installment.payment_date|date:"d/m/Y"}} - {{installment.value|currency_format}} - {{installment.id_titular_user}}
+                  {% if installment.paid == True %}
+                  <span class="material-icons color-success align-self-middle">check</span> 
+                  {% else %} 
+                  <span class="material-icons color-danger align-self-middle">close</span> 
+                  {% endif %} 
+                </span> 
+              </a>
+            </li>
+            {% endfor %}
+                    
+
+            
 
 
 
@@ -52,18 +62,17 @@
         </div>
         <div class="card-footer justify-content-around p-3">
           
-          <form action="{% url "lancamentos:edit" pk=entry.id %}" method='POST'>
-            {% csrf_token %}
+          <form action="{% url "entries:entry_update" entry.slug %}" method='get'>
             <button type='submit' class="btn btn-outline-warning">Editar</button>
           </form>
 
-          {% comment %} <form action="{% url "lancamentos:installment_list" %}" method='POST'>
+          {% comment %} <form action="{% url "entries:installment_list" %}" method='POST'>
             {% csrf_token %}
             <input type="hidden" name="entry_id" value='entry.id'>
             <button type='submit' class="btn btn-outline-primary">Parcelas</button>
           </form> {% endcomment %}
 
-          <form action="{% url "lancamentos:delete" entry.id %}" method='POST'>
+          <form action="{% url "entries:delete" entry.id %}" method='POST'>
             {% csrf_token %}
             <button type='submit' class="btn btn-outline-danger">Excluir</button>
           </form>

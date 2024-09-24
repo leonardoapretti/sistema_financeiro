@@ -18,24 +18,26 @@ class PayInstallmentView(View):
         if installment == None:
             messages.error(
                 self.request, 'Algo deu errado com a sua requisição!')
-            return redirect('lancamentos:installment_list')
+            return redirect('entries:installment_list')
 
-        if installment.paid == True:
-            messages.error(
-                self.request, 'Esta parcela ja foi quitada!')
-            return redirect('lancamentos:installment_list')
+        if installment.paid:
+            installment.paid = False
+            messages.info(request, 'Despesa pendente!')
+        else:
+            installment.paid = True
+            messages.success(request, 'Despesa quitada!')
 
-        installment.paid = True
         installment.save()
-        today = datetime.date.today()
-        payment_data = {
-            'id_installment': installment,
-            'date': today,
-            'value': installment.value,
-            'id_active_user': request.user,
 
-        }
-        Payment.objects.create(**payment_data)
-        messages.success(request, 'Despesa quitada!')
+        # today = datetime.date.today()
+        # payment_data = {
+        #     'id_installment': installment,
+        #     'date': today,
+        #     'value': installment.value,
+        #     'id_active_user': request.user,
+
+        # }
+
+        # Payment.objects.create(**payment_data)
         # TODO implementar redirect com filtro
         return redirect(request.META['HTTP_REFERER'])

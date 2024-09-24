@@ -96,6 +96,12 @@ a, a:hover{
 	vertical-align: baseline;
 }
 
+hr{
+  border-color:#aaa;
+  box-sizing:border-box;
+  width:100%;  
+}
+
 .send-form-button {
   display: inline;
   border: none;
@@ -289,7 +295,7 @@ table{
 }
 
 /* form card */
-.card-header:first-child {
+.entry-card .card-header:first-child {
   border-radius: .25rem .25rem 0 0;
 }
 .p-3 {
@@ -304,17 +310,17 @@ table{
 .border-bottom {
   border-bottom: 1px solid #cbd5e0!important;
 }
-.card-footer, .card-header {
+.entry-card .card-footer, .entry-card .card-header {
   display: flex;
   align-items: center;
 }
-.card-header {
+.entry-card .card-header {
   padding: .5rem 1rem;
   margin-bottom: 0;
   background-color: #fff;
   border-bottom: 0 solid rgba(0,0,0,.125);
 }
-.card-footer:last-child {
+.entry-card .card-footer:last-child {
   border-radius: 0 0 .25rem .25rem;
 }
 /* .h3, h3 {
@@ -326,19 +332,19 @@ table{
 .justify-content-center {
   justify-content: center!important;
 }
-.card-footer, .card-header {
+.entry-card .card-footer, .entry-card .card-header {
   display: flex;
   align-items: center;
 }
-.card-footer {
+.entry-card .card-footer {
   padding: .5rem 1rem;
   background-color: #fff;
   border-top: 0 solid rgba(0,0,0,.125);
 }
-.card {
+.entry-card {
   box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
 }
-.card {
+.entry-card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -360,6 +366,10 @@ table{
 
 .color-danger{
   color: var(--color-error-dark);
+}
+
+.color-warning{
+  color: var(--color-warning-dark);
 }
 
 .color-success{
@@ -478,7 +488,13 @@ ul {
     border-bottom: 0;
     padding: 0;
   }
+
+  .item-right{
+    align-self: center;
+  }
 }
+
+
 
 .item-content ul li i {
   font-size: 20px;

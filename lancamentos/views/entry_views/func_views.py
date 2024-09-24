@@ -15,7 +15,7 @@ from django.contrib.auth.decorators import login_not_required
 @login_not_required
 def login_user(request):
     if (request.user.is_authenticated):
-        return redirect('lancamentos:home')
+        return redirect('entries:home')
 
     if request.method == 'POST':
         form = LoginForm(request.POST or None)
@@ -27,7 +27,7 @@ def login_user(request):
             if usuario_autenticado is not None:
                 login(request, usuario_autenticado)
                 messages.success(request, 'Bem-vindo!')
-                return redirect('lancamentos:home')
+                return redirect('entries:home')
             else:
                 messages.error(request, 'Usuário ou senha incorretos!')
 
@@ -42,17 +42,17 @@ def login_user(request):
 # esse atributo é passado para a url
 
 
-@login_required(login_url='lancamentos:login_user', redirect_field_name='next')
+@login_required(login_url='entries:login_user', redirect_field_name='next')
 def logout_user(request):
     if request.user.username != request.user.username:
         messages.error(request, 'Resquisição inválida!')
-        return redirect('lancamentos:login_user')
+        return redirect('entries:login_user')
     logout(request)
     messages.success(request, 'Até mais!')
-    return redirect('lancamentos:login_user')
+    return redirect('entries:login_user')
 
 
-@login_required(login_url='lancamentos:login_user', redirect_field_name='next')
+@login_required(login_url='entries:login_user', redirect_field_name='next')
 def home(request):
     # lancamentos = Lancamento.objects.all()
     form = EntryForm(request.POST or None, request.FILES or None)
@@ -64,7 +64,7 @@ def home(request):
     return render(request, 'entries/pages/home.html', context=contexto)
 
 
-# @login_required(login_url='lancamentos:login_user', redirect_field_name='next')
+# @login_required(login_url='entries:login_user', redirect_field_name='next')
 # def novo(request):
 #     if request.method == 'POST':
 #         POST = request.POST or None
@@ -83,7 +83,7 @@ def home(request):
 #     return render(request, 'lancamentos/pages/novo.html', context=contexto)
 
 
-# @login_required(login_url='lancamentos:login_user', redirect_field_name='next')
+# @login_required(login_url='entries:login_user', redirect_field_name='next')
 # def extrato(request):
 #     lancamentos = Entry.objects.all()
 
@@ -93,7 +93,7 @@ def home(request):
 #         'valor_compartilhado': 0,
 #     }
 
-#     for lancamento in lancamentos:
+#     for lancamento in entries:
 #         valor = lancamento.valor_total
 
 #         match lancamento.id_usuario_titular.username:
@@ -124,7 +124,7 @@ def home(request):
 #     return render(request, 'lancamentos/pages/detalhes.html', contexto)
 
 
-@login_required(login_url='lancamentos:login_user', redirect_field_name='next')
+@login_required(login_url='entries:login_user', redirect_field_name='next')
 def testes(request):
 
     context = {}

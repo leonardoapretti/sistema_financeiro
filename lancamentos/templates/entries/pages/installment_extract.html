@@ -2,6 +2,7 @@
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
 {% include "global/partials/messages.html" %}
+{% comment %} {% include "global/partials/filter_form.html" %} {% endcomment %}
 {% include "global/partials/filter_form.html" %}
 <div class="row align-between">
     {% include "entries/partials/totalizers.html" %}

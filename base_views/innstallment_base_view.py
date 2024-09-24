@@ -1,18 +1,29 @@
+from typing import Any
 from django.views.generic import ListView
 from bank_account.models import CardModel
 from django.db.models import Q
 
 
-class ExtractBaseView(ListView):
+class InstallmentBaseView(ListView):
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         super().__init__(**kwargs)
 
-    def post(self, request, *args, **kwargs):
-        POST = self.request.POST
+    def get(self, request, *args, **kwargs):
+        self.start_date = request.GET.get('start_date', '')
+        self.end_date = request.GET.get('end_date', '')
 
-        self.start_date, self.end_date = POST['start_date'], POST['end_date']
+        if self.start_date == '' or self.end_date == '':
+            principal_card = self.get_principal_card()
+            self.start_date, self.end_date = principal_card.get_bill_cutoff_dates()
+
         return super().get(request, *args, **kwargs)
+
+    # def post(self, request, *args, **kwargs):
+    #     POST = self.request.POST
+
+    #     self.start_date, self.end_date = POST['start_date'], POST['end_date']
+    #     return super().get(request, *args, **kwargs)
 
     def get_queryset(self, *args, **kwargs):
         qs = super().get_queryset(*args, **kwargs)
@@ -30,8 +41,10 @@ class ExtractBaseView(ListView):
 
         totalizers = {
             'sum_debits': 0,
-            'sum_shared_debits': 0,
-            'sum_not_shared_debits': 0,
+            'sum_paid_shared_debits': 0,
+            'sum_pending_shared_debits': 0,
+            'sum_not_shared_paid_debits': 0,
+            'sum_not_shared_pendent_debits': 0,
             'sum_credits': 0,
             'sum_shared_credits': 0,
             'sum_not_shared_credits': 0,
@@ -43,9 +56,15 @@ class ExtractBaseView(ListView):
             if str(install.id_entry.id_type) == 'Despesa':
                 totalizers['sum_debits'] += install.value
                 if shared:
-                    totalizers['sum_shared_debits'] += install.value
+                    if install.paid == True:
+                        totalizers['sum_paid_shared_debits'] += install.value
+                        continue
+                    totalizers['sum_pending_shared_debits'] += install.value
                 else:
-                    totalizers['sum_not_shared_debits'] += install.value
+                    if install.paid == True:
+                        totalizers['sum_not_shared_paid_debits'] += install.value
+                        continue
+                    totalizers['sum_not_shared_pendent_debits'] += install.value
 
             elif str(install.id_entry.id_type) == 'Receita':
                 totalizers['sum_credits'] += install.value

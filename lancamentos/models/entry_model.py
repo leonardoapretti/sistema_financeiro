@@ -5,7 +5,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 from bank_account.models import CardModel, BankAccountModel
-from .other_models import Category, Type, Modality
+from lancamentos.models.installment_model import Installment
+from lancamentos.models.other_models import Category, Type, Modality
+from django.db.models import Sum
 
 
 class Entry(models.Model):
@@ -61,4 +63,14 @@ class Entry(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('lancamentos:detalhes', args=(self.id,))
+        return reverse('entries:detalhes', args=(self.slug,))
+
+    def get_all_installments(self):
+        return Installment.objects.filter(id_entry=self.id)
+
+    def get_not_paid_installments(self, user):
+        return Installment.objects.filter(
+            id_entry=self.id, id_titular_user=user, paid=False).order_by('payment_date')
+
+    def get_installments_total_value(self):
+        return self.get_all_installments().aggregate(Sum('value'))['value__sum']

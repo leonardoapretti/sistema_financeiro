@@ -24,7 +24,7 @@ class InstallmentCreateView(View):
                 messages.error(
                     request, 'Selecione um cartão.')
                 Entry.objects.filter(id=entry_id).first().delete()
-                return redirect('lancamentos:novo')
+                return redirect('entries:new')
 
             entry_date = today
             entry_date = entry_date.replace(
@@ -55,14 +55,13 @@ class InstallmentCreateView(View):
                 'id_titular_user': entry.id_titular_user,
             }
             init_month += 1
-            print(data)
+
+            #  cria nova parcela
             Installment.objects.create(**data)
-            print(User.objects.all().exclude(
-                id=entry.id_titular_user.id).first())
+            # lança a parcela para o outro usuário no caso compartilhada
             if entry.shared:
                 data['id_titular_user'] = User.objects.all().exclude(
                     id=entry.id_titular_user.id).first()
-                print(data)
                 Installment.objects.create(**data)
         messages.success(request, f'{entry.id_type} cadastrada!')
-        return redirect('lancamentos:novo')
+        return redirect('entries:new')

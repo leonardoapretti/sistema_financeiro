@@ -19,7 +19,7 @@
 #         if str(entry.id_modality) == 'Crédito':
 #             card = entry.id_card
 #             if card == None:
-#                 return redirect('lancamentos:novo')
+#                 return redirect('entries:new')
 #             print(card.payment_day)
 #             init_month = 1
 

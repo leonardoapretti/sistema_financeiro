@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
@@ -59,3 +60,11 @@ class CardModel(models.Model):
         start_date = payment_date
         end_date = start_date + relativedelta(months=1)
         return start_date, end_date
+
+    def get_payment_date(self):
+        today = datetime.date.today()
+
+        if today.day <= self.payment_day:
+            return today.replace(day=self.payment_day)
+
+        return today.replace(day=self.payment_day) + relativedelta(months=1)

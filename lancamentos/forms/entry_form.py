@@ -4,11 +4,11 @@ from django import forms
 from lancamentos.models import *
 import datetime
 from django.contrib.auth.models import User
-from bank_account.models import BankAccountModel
+from bank_account.models import BankAccountModel, CardModel
 
 
 class EntryForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         super(EntryForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             input_type = visible.field.widget.__class__.__name__
@@ -19,10 +19,11 @@ class EntryForm(forms.ModelForm):
                 case _:
                     visible.field.widget.attrs['class'] = 'form-control'
 
-        # self.request = kwargs.pop('request')
+        self.fields["id_bank_account"].queryset = BankAccountModel.objects.filter(
+            id_titular_user=user)
 
-        # self.fields["id_bank_account"].queryset = BankAccountModel.objects.filter(
-        #     id_titular_user=self.request.user)
+        self.fields["id_card"].queryset = CardModel.objects.filter(
+            id_bank_account__id_titular_user=user)
 
     class Meta:
         model = Entry
@@ -36,11 +37,11 @@ class EntryForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        modality = cleaned_data['id_modality']
-        bank = cleaned_data['id_bank_account']
-        card = cleaned_data['id_card']
-        if str(modality) == 'Crédito' and (bank == None or card == None):
-            raise ValidationError(
-                'Banco e Cartão não podem estar em branco!', 'invalid')
+        # modality = cleaned_data['id_modality']
+        # bank = cleaned_data['id_bank_account']
+        # card = cleaned_data['id_card']
+        # if str(modality) == 'Crédito' and (bank == None or card == None):
+        #     raise ValidationError(
+        #         'Banco e Cartão não podem estar em branco!', 'invalid')
 
         return cleaned_data

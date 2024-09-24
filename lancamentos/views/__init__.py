@@ -7,3 +7,4 @@ from .entry_views.entry_update_view import EntryUpdateView
 from .installment_views.create_installment_view import InstallmentCreateView
 from .installment_views.installment_list_view import InstallmentListView
 from .installment_views.pay_installment_view import PayInstallmentView
+from .installment_views.installment_update_view import InstallmentUpdateView

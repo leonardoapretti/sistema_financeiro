@@ -1,7 +1,7 @@
 {% load number_filters %}
 <div class="container">
     <div class="row justify-content-around">        
-        <div class="col-md-4 col-xl-3">
+        <div class="col-md-6">
             <div class="card color-income order-card">
                 <div class="card-block">
                     <h6 class="m-b-20 font-big">Receitas</h6>
@@ -12,13 +12,17 @@
             </div>
         </div>
 
-        <div class="col-md-4 col-xl-3">
+        <div class="col-md-6">
             <div class="card color-expense order-card">
                 <div class="card-block">
                     <h6 class="m-b-20 font-big">Despesas</h6>
                     <h2 class="text-right">{{totalizers.sum_debits|currency_format}}</h2>   
-                    <p class="m-b-0 font-small">Compartilhadas<span class="f-right">{{totalizers.sum_shared_debits|currency_format}}</span></p>
-                    <p class="m-b-0 font-small">Não compartilhadas<span class="f-right">{{totalizers.sum_not_shared_debits|currency_format}}</span></p>
+                    <p class="m-b-0 font-small">Compartilhadas pagas<span class="f-right">{{totalizers.sum_paid_shared_debits|currency_format}}</span></p>
+                    <p class="m-b-0 font-small">Compartilhadas pendentes<span class="f-right">{{totalizers.sum_pending_shared_debits|currency_format}}</span></p>
+                    <p class="m-b-0 font-small">Não compartilhadas pagas<span class="f-right">{{totalizers.sum_not_shared_paid_debits|currency_format}}</span></p>
+                    <p class="m-b-0 font-small">Não compartilhadas pendentes<span class="f-right">{{totalizers.sum_not_shared_pendent_debits|currency_format}}</span></p>
+
+                    
                 </div>
             </div>
         </div>

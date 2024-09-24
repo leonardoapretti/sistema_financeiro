@@ -59,7 +59,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-LOGIN_URL = reverse_lazy('lancamentos:login_user')
+LOGIN_URL = reverse_lazy('entries:login_user')
 
 ROOT_URLCONF = 'project.urls'
 

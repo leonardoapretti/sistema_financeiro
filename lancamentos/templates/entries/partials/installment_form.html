@@ -1,0 +1,27 @@
+<div class="p-4">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="{{form.value.id_for_label}}">{{form.value.label}}</label>
+                {{form.value}}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{form.payment_date.id_for_label}}">{{form.payment_date.label}}</label>
+                {{form.payment_date}}
+            </div>
+            <div class="form-group col-md-3">
+                <label for="{{form.id_titular_user.id_for_label}}">{{form.id_titular_user.label}}</label>
+                {{form.id_titular_user}}
+            </div>
+            <div class="form-group col-md-3">
+                <label for="{{form.paid.id_for_label}}">{{form.paid.label}}</label>
+                {{form.paid}}
+            </div>
+    
+ 
+        </div>
+
+        <button type="submit" class=" btn btn-primary">Atualizar</button>
+    </form>
+</div>

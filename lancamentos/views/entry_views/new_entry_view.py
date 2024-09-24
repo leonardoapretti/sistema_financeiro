@@ -1,3 +1,4 @@
+from base_mixins.installment.installment_mixin import InstallmentMixin
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
@@ -9,21 +10,18 @@ from bank_account.models import BankAccountModel
 # finalizar essa alteração
 
 
-class NewEntryView(FormView):
+class NewEntryView(FormView, InstallmentMixin):
     template_name = 'entries/pages/new.html'
     context_object_name = 'form'
-    success_url = reverse_lazy('lancamentos:novo')
+    success_url = reverse_lazy('entries:new')
     form_class = EntryForm
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def get_form_kwargs(self):
-        """ Passes the request object to the form class.
-         This is necessary to only display members that belong to a given user"""
-
         kwargs = super(NewEntryView, self).get_form_kwargs()
-        # kwargs['request'] = self.request
+        kwargs['user'] = self.request.user
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -48,9 +46,12 @@ class NewEntryView(FormView):
         entry = form.save(commit=False)
         entry.id_active_user = self.request.user
         entry.save()
-        # messages.success(
-        #     self.request, f'{entry.id_type} cadastrada!')
-        return redirect('lancamentos:create_installment', entry_id=entry.id)
+        self.entry = entry
+        self.create_installment()
+        messages.success(
+            self.request, f'{entry.id_type} cadastrada com sucesso!')
+
+        return redirect('entries:new')
 
     def form_invalid(self, form):
         response = super().form_invalid(form)

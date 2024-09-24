@@ -1,12 +1,5 @@
-se despesa no crédito:
-    data = data vencimento cartão cadastrado 
-    *não permitir cadastro de receitas no crédito por conta da data de vencimento*
-else
-    data = data lancamento
-
-
-
-
+TODO
+excluir despesas caso deixe de ser compartilhada
 
 
 
@@ -152,7 +145,7 @@ class Lancamento(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('lancamentos:detalhes', args=(self.id,))
+        return reverse('entries:detalhes', args=(self.id,))
 
 
 class LancamentoBaixa(models.Model):
@@ -419,7 +412,7 @@ class Entry(models.Model):
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('lancamentos:detalhes', args=(self.id,))
+        return reverse('entries:detalhes', args=(self.id,))
 
 
 class LancamentoBaixa(models.Model):

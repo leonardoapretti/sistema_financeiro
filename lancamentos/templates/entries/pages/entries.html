@@ -2,7 +2,9 @@
 {% block title %}{{title}}{% endblock title %}
 {% block content %}
 {% include "global/partials/messages.html" %}
+{% include "global/partials/filter_form.html" %}
 {% include "../partials/entry_list.html" %}
+
 {% comment %} {% include "global/partials/list.html" %} {% endcomment %}
 {% endblock content %}
 
