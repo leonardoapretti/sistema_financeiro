@@ -29,19 +29,18 @@ class EntryForm(forms.ModelForm):
         model = Entry
         fields = '__all__'
         exclude = ['slug', 'id_active_user']
-        widgets = {
-            # TODO RETORNAR APÓS DESENVOLVIMENTO
-            # 'entry_date': forms.DateInput(attrs={"type": "date"}),
-            # 'valor_total': forms.TextInput
-        }
+        # widgets = {
+        #     'entry_date': forms.DateInput(attrs={"type": "date"}),
+        #     'valor': forms.TextInput
+        # }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        # modality = cleaned_data['id_modality']
-        # bank = cleaned_data['id_bank_account']
-        # card = cleaned_data['id_card']
-        # if str(modality) == 'Crédito' and (bank == None or card == None):
-        #     raise ValidationError(
-        #         'Banco e Cartão não podem estar em branco!', 'invalid')
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     modality = cleaned_data['id_modality']
+    #     bank = cleaned_data['id_bank_account']
+    #     card = cleaned_data['id_card']
+    #     if str(modality) == 'Crédito' and (bank == None or card == None):
+    #         raise ValidationError(
+    #             'Banco e Cartão não podem estar em branco!', 'invalid')
 
-        return cleaned_data
+    #     return cleaned_data

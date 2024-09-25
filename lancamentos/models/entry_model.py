@@ -60,6 +60,10 @@ class Entry(models.Model):
         self.description = self.description.capitalize(
         ) if self.description else self.description
 
+        if self.id_category == None:
+            self.id_category = Category.objects.filter(
+                title='Outro(a)').first()
+
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self):
