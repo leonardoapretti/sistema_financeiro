@@ -7,10 +7,6 @@ import pandas as pd
 from django.contrib.auth.models import User
 
 
-# """
-# TODO
-# certificar que as despesas no débito estão sendo lançadas na sua data atual e as posteriores no dia atual pro próximos meses
-# """"
 class InstallmentCreateView(View):
     def get(self, request, entry_id):
         entry = Entry.objects.filter(id=entry_id).first()

@@ -6,11 +6,6 @@ from django.shortcuts import redirect
 import datetime
 from django.contrib import messages
 
-"""
-TODO
-para cada pagamento deverá ser lançada uma receita para o usuário que está vinculado como credor da despesa, caso haja
-"""
-
 
 class PayInstallmentView(View):
     def post(self, request, *args, **kwargs):
@@ -28,16 +23,4 @@ class PayInstallmentView(View):
             messages.success(request, 'Despesa quitada!')
 
         installment.save()
-
-        # today = datetime.date.today()
-        # payment_data = {
-        #     'id_installment': installment,
-        #     'date': today,
-        #     'value': installment.value,
-        #     'id_active_user': request.user,
-
-        # }
-
-        # Payment.objects.create(**payment_data)
-        # TODO implementar redirect com filtro
         return redirect(request.META['HTTP_REFERER'])

@@ -46,8 +46,8 @@ class NewEntryView(FormView, InstallmentMixin):
         entry = form.save(commit=False)
         entry.id_active_user = self.request.user
         entry.save()
-        self.entry = entry
         self.create_installment()
+        self.entry = entry
         messages.success(
             self.request, f'{entry.id_type} cadastrada com sucesso!')
 
